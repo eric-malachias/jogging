@@ -28,4 +28,9 @@ Route::group([
     });
 
     Route::get('/users/{user}/jogging-times', 'UserController@getJoggingTimes');
+
+    Route::delete('/jogging-times/{jogging_time}', 'JoggingTimeController@deleteOne');
+    Route::get('/jogging-times/{jogging_time}', 'JoggingTimeController@getOne');
+    Route::post('/jogging-times', 'JoggingTimeController@postOne');
+    Route::put('/jogging-times/{jogging_time}', 'JoggingTimeController@putOne');
 });
