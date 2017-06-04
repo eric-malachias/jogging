@@ -24,7 +24,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
-    public function Jogs()
+    public function jogs()
     {
         return $this->hasMany(Jog::class, 'owner_id');
     }

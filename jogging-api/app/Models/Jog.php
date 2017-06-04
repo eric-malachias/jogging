@@ -27,4 +27,27 @@ class Jog extends Model
             }
         });
     }
+
+    public function scopeAfter($query, $after)
+    {
+        $query->where('ended_at', '>=', $after);
+    }
+    public function scopeBefore($query, $before)
+    {
+        $query->where('started_at', '<=', $before);
+    }
+    public function scopeBetween($query, $before, $after)
+    {
+        $query
+            ->when($before, function ($query) use ($before) {
+                return $query->before($before);
+            })
+            ->when($after, function ($query) use ($after) {
+                return $query->after($after);
+            });
+    }
+    public function scopeLatestFirst($query)
+    {
+        $query->orderByDesc('started_at');
+    }
 }

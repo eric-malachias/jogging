@@ -43,10 +43,12 @@ class UserController extends Controller
 
         return $this->respondWithToken($user);
     }
-    public function getJogs(User $user)
+    public function getJogs(User $user, Request $request)
     {
         $jogs = $user
-            ->Jogs()
+            ->jogs()
+            ->between($request->before, $request->after)
+            ->latestFirst()
             ->paginate(10);
 
         return response()->ok($jogs);
