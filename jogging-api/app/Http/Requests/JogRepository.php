@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class JoggingTimeRequest extends Request
+class JogRequest extends Request
 {
     public function rules()
     {

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Auth;
 
-class JoggingTime extends Model
+class Jog extends Model
 {
     protected $fillable = [
         'started_at',
@@ -21,9 +21,9 @@ class JoggingTime extends Model
     {
         parent::boot();
 
-        static::creating(function ($joggingTime) {
-            if (empty($joggingTime->owner_id)) {
-                $joggingTime->owner_id = Auth::user()->id;
+        static::creating(function ($jog) {
+            if (empty($jog->owner_id)) {
+                $jog->owner_id = Auth::user()->id;
             }
         });
     }

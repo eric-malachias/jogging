@@ -43,12 +43,12 @@ class UserController extends Controller
 
         return $this->respondWithToken($user);
     }
-    public function getJoggingTimes(User $user)
+    public function getJogs(User $user)
     {
-        $joggingTimes = $user
-            ->joggingTimes()
+        $jogs = $user
+            ->Jogs()
             ->paginate(10);
 
-        return response()->ok($joggingTimes);
+        return response()->ok($jogs);
     }
 }

@@ -4,9 +4,9 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableJoggingTimes extends Migration
+class CreateTableJogs extends Migration
 {
-    const TABLE = 'jogging_times';
+    const TABLE = 'jogs';
 
     public function up()
     {

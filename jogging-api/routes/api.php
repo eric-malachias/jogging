@@ -27,10 +27,10 @@ Route::group([
         return response()->ok(Auth::user());
     });
 
-    Route::get('/users/{user}/jogging-times', 'UserController@getJoggingTimes');
+    Route::get('/users/{user}/jogs', 'UserController@getJogs');
 
-    Route::delete('/jogging-times/{jogging_time}', 'JoggingTimeController@deleteOne');
-    Route::get('/jogging-times/{jogging_time}', 'JoggingTimeController@getOne');
-    Route::post('/jogging-times', 'JoggingTimeController@postOne');
-    Route::put('/jogging-times/{jogging_time}', 'JoggingTimeController@putOne');
+    Route::delete('/jogs/{jog}', 'JogController@deleteOne');
+    Route::get('/jogs/{jog}', 'JogController@getOne');
+    Route::post('/jogs', 'JogController@postOne');
+    Route::put('/jogs/{jog}', 'JogController@putOne');
 });

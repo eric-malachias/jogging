@@ -16,7 +16,7 @@ $factory->define(User::class, function (Generator $faker) {
     ];
 });
 
-$factory->define(JoggingTime::class, function (Generator $faker) {
+$factory->define(Jog::class, function (Generator $faker) {
     $startedAt = Carbon::now()->subHours(rand() % (30 * 24) + 1);
     $endedAt = $startedAt->copy()->addMinutes(15 * (rand() % 8 + 1));
 

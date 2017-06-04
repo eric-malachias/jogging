@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Repositories\RoleRepository;
 use App\Models\User;
-use App\Models\JoggingTime;
+use App\Models\Jog;
 
 class UserTableSeeder extends Seeder
 {
@@ -17,7 +17,7 @@ class UserTableSeeder extends Seeder
                 'role_id' => app(RoleRepository::class)->findByNameOrFail('regular')->id,
             ]);
 
-            factory(JoggingTime::class, 50)->create([
+            factory(Jog::class, 50)->create([
                 'owner_id' => $user->id,
             ]);
         });
