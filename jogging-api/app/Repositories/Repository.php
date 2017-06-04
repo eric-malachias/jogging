@@ -35,7 +35,7 @@ class Repository
         $result = $this->findWhere($conditions);
 
         if (empty($result)) {
-            throw (new ModelNotFoundException)->setModel(get_class($this->getModel()), $id);
+            throw (new ModelNotFoundException)->setModel(get_class($this->getModel()), $conditions);
         }
 
         return $result;
