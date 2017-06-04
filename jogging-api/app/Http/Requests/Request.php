@@ -10,6 +10,10 @@ class Request extends IlluminateRequest
     {
         return true;
     }
+    public function response(array $errors)
+    {
+        return response()->badRequest($errors);
+    }
     public function rules()
     {
         return [];

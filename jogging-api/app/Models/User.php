@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Repositories\RoleRepository;
+use Hash;
 
 class User extends Authenticatable
 {
@@ -34,5 +36,21 @@ class User extends Authenticatable
     public function isRegular()
     {
         return $this->role->isRegular();
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            if (empty($user->role_id)) {
+                $user->role_id = app(RoleRepository::class)->findRegular()->id;
+            }
+        });
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make($value);
     }
 }

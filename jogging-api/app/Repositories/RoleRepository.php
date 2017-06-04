@@ -12,4 +12,8 @@ class RoleRepository extends Repository
     {
         return $this->findByOrFail('name', $name);
     }
+    public function findRegular()
+    {
+        return $this->findByNameOrFail(Role::REGULAR);
+    }
 }

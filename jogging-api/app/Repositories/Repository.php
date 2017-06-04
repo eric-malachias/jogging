@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Repository
 {
+    public function create(...$arguments)
+    {
+        return $this->getModel()->create(...$arguments);
+    }
     public function find($id)
     {
         return $this->findBy('id', $id);
