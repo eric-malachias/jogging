@@ -24,6 +24,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
+    public function joggingTimes()
+    {
+        return $this->hasMany(JoggingTime::class, 'owner_id');
+    }
 
     public function isAdmin()
     {

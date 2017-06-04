@@ -7,6 +7,7 @@ use JWTAuth;
 use App\Http\Requests\Request;
 use App\Repositories\UserRepository;
 use App\Http\Requests\UserSignUpRequest;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -41,5 +42,13 @@ class UserController extends Controller
         ]));
 
         return $this->respondWithToken($user);
+    }
+    public function getJoggingTimes(User $user)
+    {
+        $joggingTimes = $user
+            ->joggingTimes()
+            ->paginate(10);
+
+        return response()->ok($joggingTimes);
     }
 }

@@ -13,9 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::get('/', function () {
-//     return response()->ok('Jogging API');
-// });
+Route::get('/', function () {
+    return response()->ok('Jogging API');
+});
 
 Route::post('/users', 'UserController@postOne');
 Route::post('/users/login', 'UserController@login');
@@ -26,4 +26,6 @@ Route::group([
     Route::get('/me', function () {
         return response()->ok(Auth::user());
     });
+
+    Route::get('/users/{user}/jogging-times', 'UserController@getJoggingTimes');
 });

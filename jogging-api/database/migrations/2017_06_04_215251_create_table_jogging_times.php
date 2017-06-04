@@ -4,24 +4,24 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableUsers extends Migration
+class CreateTableJoggingTimes extends Migration
 {
-    const TABLE = 'users';
+    const TABLE = 'jogging_times';
 
     public function up()
     {
         Schema::create(static::TABLE, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 255);
-            $table->string('email', 255)->unique();
-            $table->string('password', 60);
-            $table->unsignedInteger('role_id');
+            $table->datetime('started_at');
+            $table->datetime('ended_at');
+            $table->unsignedInteger('distance');
+            $table->unsignedInteger('owner_id');
             $table->timestamps();
 
             $table
-                ->foreign('role_id')
+                ->foreign('owner_id')
                 ->references('id')
-                ->on('roles')
+                ->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
