@@ -27,10 +27,10 @@ Route::group([
         return response()->ok(Auth::user());
     });
 
-    Route::get('/users', 'UserController@getAll');
-    Route::delete('/users/{user}', 'UserController@deleteOne');
-    Route::put('/users/{user}', 'UserController@putOne');
-    Route::get('/users/{user}', 'UserController@getOne');
+    Route::get('/users', 'UserController@getAll')->middleware('can:viewAll,App\Models\User');
+    Route::delete('/users/{user}', 'UserController@deleteOne')->middleware('can:delete,user');
+    Route::put('/users/{user}', 'UserController@putOne')->middleware('can:edit,user');
+    Route::get('/users/{user}', 'UserController@getOne')->middleware('can:view,user');
 
     Route::get('/users/{user}/jogs', 'UserController@getJogs');
 
