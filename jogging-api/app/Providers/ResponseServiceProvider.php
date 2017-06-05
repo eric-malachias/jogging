@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Response;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Http\Response as HttpResponse;
 
 class ResponseServiceProvider extends ServiceProvider
 {
@@ -16,13 +17,13 @@ class ResponseServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->createResponse('ok', 200);
-        $this->createResponse('created', 201);
-        $this->createResponse('badRequest', 400);
-        $this->createResponse('unauthorized', 401);
-        $this->createResponse('forbidden', 403);
-        $this->createResponse('notFound', 404);
-        $this->createResponse('unprocessableEntity', 422);
-        $this->createResponse('serverError', 500);
+        $this->createResponse('ok', HttpResponse::HTTP_OK);
+        $this->createResponse('created', HttpResponse::HTTP_CREATED);
+        $this->createResponse('badRequest', HttpResponse::HTTP_BAD_REQUEST);
+        $this->createResponse('unauthorized', HttpResponse::HTTP_UNAUTHORIZED);
+        $this->createResponse('forbidden', HttpResponse::HTTP_FORBIDDEN);
+        $this->createResponse('notFound', HttpResponse::HTTP_NOT_FOUND);
+        $this->createResponse('unprocessableEntity', HttpResponse::HTTP_UNPROCESSABLE_ENTITY);
+        $this->createResponse('serverError', HttpResponse::HTTP_INTERNAL_SERVER_ERROR);
     }
 }
