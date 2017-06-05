@@ -27,6 +27,11 @@ Route::group([
         return response()->ok(Auth::user());
     });
 
+    Route::get('/users', 'UserController@getAll');
+    Route::delete('/users/{user}', 'UserController@deleteOne');
+    Route::put('/users/{user}', 'UserController@putOne');
+    Route::get('/users/{user}', 'UserController@getOne');
+
     Route::get('/users/{user}/jogs', 'UserController@getJogs');
 
     Route::delete('/jogs/{jog}', 'JogController@deleteOne');

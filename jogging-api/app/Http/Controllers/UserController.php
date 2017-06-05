@@ -53,4 +53,31 @@ class UserController extends Controller
 
         return response()->ok($jogs);
     }
+    public function deleteOne(User $user)
+    {
+        $user->delete();
+
+        return response()->ok($user);
+    }
+    public function getAll(UserRepository $userRepository)
+    {
+        $users = $userRepository->paginate(10);
+
+        return response()->ok($users);
+    }
+    public function putOne(UserSignUpRequest $request, User $user)
+    {
+        $user->fill($request->only([
+            'name',
+            'email',
+            'password',
+        ]));
+        $user->save();
+
+        return response()->ok($user);
+    }
+    public function getOne(User $user)
+    {
+        return response()->ok($user);
+    }
 }

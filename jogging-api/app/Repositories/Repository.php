@@ -46,7 +46,7 @@ class Repository
     }
     public function paginate(...$arguments)
     {
-        return $this->getModel(...$arguments);
+        return $this->getModel()->paginate(...$arguments);
     }
     protected function getModel()
     {
