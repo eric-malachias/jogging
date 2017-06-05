@@ -57,4 +57,8 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = Hash::make($value);
     }
+    public function owns(Jog $jog)
+    {
+        return (int)$jog->owner_id === (int)$this->id;
+    }
 }

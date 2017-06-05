@@ -27,7 +27,7 @@ class JogController extends Controller
             'distance',
         ]));
 
-        return response()->ok($jog);
+        return response()->created($jog);
     }
     public function putOne(JogRequest $request, Jog $jog)
     {

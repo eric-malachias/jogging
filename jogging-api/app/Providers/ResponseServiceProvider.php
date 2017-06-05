@@ -17,6 +17,7 @@ class ResponseServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->createResponse('ok', 200);
+        $this->createResponse('created', 201);
         $this->createResponse('badRequest', 400);
         $this->createResponse('unauthorized', 401);
         $this->createResponse('forbidden', 403);

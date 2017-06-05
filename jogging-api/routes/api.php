@@ -34,9 +34,9 @@ Route::group([
 
     Route::get('/users/{user}/jogs', 'UserController@getJogs');
 
-    Route::get('/jogs', 'JogController@getAll');
-    Route::delete('/jogs/{jog}', 'JogController@deleteOne');
-    Route::get('/jogs/{jog}', 'JogController@getOne');
-    Route::post('/jogs', 'JogController@postOne');
-    Route::put('/jogs/{jog}', 'JogController@putOne');
+    Route::delete('/jogs/{jog}', 'JogController@deleteOne')->middleware('can:delete,jog');
+    Route::get('/jogs/{jog}', 'JogController@getOne')->middleware('can:view,jog');
+    Route::post('/jogs', 'JogController@postOne')->middleware('can:create,App\Models\Jog');
+    Route::put('/jogs/{jog}', 'JogController@putOne')->middleware('can:edit,jog');
+    Route::get('/jogs', 'JogController@getAll')->middleware('can:viewAll,App\Models\Jog');
 });

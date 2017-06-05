@@ -11,7 +11,7 @@ $factory->define(User::class, function (Generator $faker) {
 
     return [
         'name' => $faker->name,
-        'email' => "user{++$index}@example.com",
+        'email' => sprintf('user%d@example.com', ++$index),
         'password' => $password ?: $password = '123456',
     ];
 });
