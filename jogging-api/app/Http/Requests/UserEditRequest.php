@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class UserSignUpRequest extends Request
+class UserEditRequest extends Request
 {
     protected function excludeEmailFromUpdate()
     {

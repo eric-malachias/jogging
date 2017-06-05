@@ -6,7 +6,7 @@ use Hash;
 use JWTAuth;
 use App\Http\Requests\Request;
 use App\Repositories\UserRepository;
-use App\Http\Requests\UserSignUpRequest;
+use App\Http\Requests\UserEditRequest;
 use App\Models\User;
 
 class UserController extends Controller
@@ -33,7 +33,7 @@ class UserController extends Controller
 
         return $this->respondWithToken($user);
     }
-    public function postOne(UserSignUpRequest $request, UserRepository $userRepository)
+    public function postOne(UserEditRequest $request, UserRepository $userRepository)
     {
         $user = $userRepository->create($request->only([
             'name',
@@ -65,7 +65,7 @@ class UserController extends Controller
 
         return response()->ok($users);
     }
-    public function putOne(UserSignUpRequest $request, User $user)
+    public function putOne(UserEditRequest $request, User $user)
     {
         $user->fill($request->only([
             'name',
