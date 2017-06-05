@@ -34,6 +34,7 @@ Route::group([
 
     Route::get('/users/{user}/jogs', 'UserController@getJogs');
 
+    Route::get('/jogs', 'JogController@getAll');
     Route::delete('/jogs/{jog}', 'JogController@deleteOne');
     Route::get('/jogs/{jog}', 'JogController@getOne');
     Route::post('/jogs', 'JogController@postOne');

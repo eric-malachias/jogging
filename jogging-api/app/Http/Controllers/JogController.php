@@ -40,4 +40,8 @@ class JogController extends Controller
 
         return response()->ok($jog);
     }
+    public function getAll(JogRepository $jogRepository)
+    {
+        return response()->ok($jogRepository->paginate(10));
+    }
 }
