@@ -15,6 +15,8 @@ Vue.locales(locales)
 
 Vue.config.productionTip = false
 
+Vue.http.options.root = '/api'
+
 /* eslint-disable no-new */
 new Vue({
     el: '#app',

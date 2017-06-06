@@ -4,6 +4,7 @@
             <div class="col-sm-12">
                 <h1>{{ t('login') }}</h1>
 
+                <div v-if="error">{{ t(`error.login.${error.status}`) }}</div>
                 <div class="form-group">
                     <input class="form-control" type="text" :placeholder="t('email')" v-model="email" @keypress.enter="login()">
                 </div>
@@ -17,16 +18,22 @@
 </template>
 
 <script>
+import Auth from '@/services/Auth'
+
 export default {
     data () {
         return {
+            error: '',
             email: '',
             password: ''
         }
     },
     methods: {
         login () {
-
+            Auth.login(this, {
+                email: this.email,
+                password: this.password
+            })
         }
     }
 }
