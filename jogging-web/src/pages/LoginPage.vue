@@ -34,10 +34,14 @@ export default {
     },
     methods: {
         login () {
-            Auth.login(this, {
-                email: this.email,
-                password: this.password
-            })
+            Auth
+                .login(this, {
+                    email: this.email,
+                    password: this.password
+                })
+                .then(res => {
+                    this.$router.push('/jogs')
+                })
         }
     }
 }
