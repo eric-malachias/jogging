@@ -7,5 +7,6 @@ export default {
     'signUp': 'Sign Up',
     'myJogs': 'My Jogs',
     'manageUsers': 'Manage Users',
-    'manageJogs': 'Manage Jogs'
+    'manageJogs': 'Manage Jogs',
+    'loggedAs': 'Logged as:'
 }

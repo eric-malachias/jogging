@@ -2,6 +2,15 @@ import Http from './Http'
 import Storage from './Storage'
 
 const Auth = {
+    getHeader () {
+        const user = this.getUser()
+
+        if (!user) {
+            return null
+        }
+
+        return `Bearer ${user.token}`
+    },
     getUser () {
         return Storage.Session.get('user', '')
     },

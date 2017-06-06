@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import Resource from 'vue-resource'
 import VueTranslate from 'vue-translate-plugin'
+import Auth from '@/services/Auth'
 
 Vue.use(Resource)
 Vue.use(VueTranslate)
@@ -16,6 +17,11 @@ Vue.locales(locales)
 Vue.config.productionTip = false
 
 Vue.http.options.root = '/api'
+Vue.http.interceptors.push(function (request, next) {
+    request.headers.set('Authorization', Auth.getHeader())
+
+    next()
+})
 
 /* eslint-disable no-new */
 new Vue({

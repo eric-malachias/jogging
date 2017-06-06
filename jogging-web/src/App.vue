@@ -2,14 +2,17 @@
     <div id="app">
         <navigator></navigator>
         <router-view></router-view>
+        <footer-panel></footer-panel>
     </div>
 </template>
 
 <script>
+import FooterPanel from '@/components/FooterPanel'
 import Navigator from '@/components/Navigator'
 
 export default {
     components: {
+        FooterPanel,
         Navigator
     },
     name: 'app'
