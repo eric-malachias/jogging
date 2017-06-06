@@ -15,6 +15,7 @@ class UserController extends Controller
     {
         return response()->ok([
             'id' => $user->id,
+            'name' => $user->name,
             'token' => JWTAuth::fromUser($user),
             'role' => $user->role->name,
         ]);
