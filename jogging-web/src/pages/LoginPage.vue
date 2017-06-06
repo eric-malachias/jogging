@@ -4,7 +4,7 @@
             <div class="col-sm-12">
                 <h1>{{ t('login') }}</h1>
 
-                <div v-if="error">{{ t(`error.login.${error.status}`) }}</div>
+                <alert v-if="error" type="danger" dismissable="true" :content="t(`error.login.${error.status}`)" @dismiss="error = null"></alert>
                 <div class="form-group">
                     <input class="form-control" type="text" :placeholder="t('email')" v-model="email" @keypress.enter="login()">
                 </div>
@@ -19,8 +19,12 @@
 
 <script>
 import Auth from '@/services/Auth'
+import Alert from '@/components/Alert'
 
 export default {
+    components: {
+        Alert
+    },
     data () {
         return {
             error: '',
