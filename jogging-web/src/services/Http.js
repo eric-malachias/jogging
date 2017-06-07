@@ -2,7 +2,7 @@ import { Http as VueHttp } from 'vue-resource'
 
 export default {
     delete (context, ...args) {
-        return this.delete(context, 'delete', args)
+        return this.request(context, 'delete', args)
     },
     get (context, ...args) {
         return this.request(context, 'get', args)
