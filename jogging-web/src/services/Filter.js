@@ -23,5 +23,10 @@ export default {
         Vue.filter('distance', function (value) {
             return `${value}m`
         })
+        Vue.filter('speed', function (value) {
+            const [a, b] = (Math.round(value * 10) / 10).toString().split('.')
+
+            return [a, (b || '' + '0').slice(-1)].join('.') + 'km/h'
+        })
     }
 }

@@ -1,26 +1,26 @@
 <template>
     <div id="jog-list-page" class="container">
         <div class="control-group">
-            <button class="btn btn-primary">{{ t('createJog') }}</button>
+            <button class="btn btn-primary" @click="createJog()">{{ t('createJog') }}</button>
         </div>
         <table v-if="loaded" class="table">
             <thead>
                 <tr>
-                    <th>{{ t('id') }}</th>
-                    <th>{{ t('distance') }}</th>
                     <th>{{ t('startedAt') }}</th>
+                    <th>{{ t('distance') }}</th>
                     <th>{{ t('duration') }}</th>
+                    <th>{{ t('speed') }}</th>
                     <th>{{ t('actions') }}</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(jog, index) in jogs" :key="jog.id">
-                    <td>{{ jog.id }}</td>
-                    <td>{{ jog.distance | distance }}</td>
                     <td>{{ jog.started_at | date }}</td>
+                    <td>{{ jog.distance | distance }}</td>
                     <td>{{ calculateDuration(jog) | duration }}</td>
+                    <td>{{ calculateSpeed(jog) | speed }}</td>
                     <td>
-                        <button class="btn btn-primary btn-xs" :title="t('hint.editJog')"><span class="glyphicon glyphicon-pencil"></span></button>
+                        <button class="btn btn-primary btn-xs" :title="t('hint.editJog')" @click="editJog(jog)"><span class="glyphicon glyphicon-pencil"></span></button>
                         <button class="btn btn-danger btn-xs" :title="t('hint.removeJog')" @click="removeJog(jog, index)"><span class="glyphicon glyphicon-remove"></span></button>
                     </td>
                 </tr>
@@ -58,12 +58,38 @@ export default {
     },
     methods: {
         calculateDuration (jog) {
+            if (jog.duration) {
+                return jog.duration
+            }
+
             const startedAt = moment(jog.started_at)
             const endedAt = moment(jog.ended_at)
 
-            const duration = moment.duration(endedAt.diff(startedAt))
+            const duration = moment.duration(endedAt.diff(startedAt)).asMinutes()
 
-            return duration.asMinutes()
+            jog.duration = duration
+
+            return jog.duration
+        },
+        calculateSpeed (jog) {
+            if (jog.speed) {
+                return jog.speed
+            }
+
+            const distance = jog.distance / 1000
+            const duration = this.calculateDuration(jog) / 60
+
+            const speed = distance / duration
+
+            jog.speed = speed
+
+            return jog.speed
+        },
+        createJog () {
+            this.$router.push('/jogs/new')
+        },
+        editJog (jog) {
+            this.$router.push(`/jogs/${jog.id}`)
         },
         loadJogs (page) {
             Http
@@ -97,5 +123,8 @@ export default {
 <style scoped>
     .pagination-container {
         text-align: center;
+    }
+    table {
+        table-layout: fixed;
     }
 </style>

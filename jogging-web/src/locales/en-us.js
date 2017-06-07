@@ -20,5 +20,6 @@ export default {
     'createJog': 'Create Jog',
     'logout': 'Log Out',
     'hint.editJog': 'Click to edit this jog.',
-    'hint.removeJog': 'Click to remove this jog.'
+    'hint.removeJog': 'Click to remove this jog.',
+    'speed': 'Speed'
 }
