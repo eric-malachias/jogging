@@ -6,6 +6,7 @@ import router from './router'
 import Resource from 'vue-resource'
 import VueTranslate from 'vue-translate-plugin'
 import Auth from '@/services/Auth'
+import Filter from '@/services/Filter'
 
 Vue.use(Resource)
 Vue.use(VueTranslate)
@@ -22,6 +23,8 @@ Vue.http.interceptors.push(function (request, next) {
 
     next()
 })
+
+Filter.boot()
 
 /* eslint-disable no-new */
 new Vue({

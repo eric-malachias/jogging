@@ -14,6 +14,13 @@ const Auth = {
     getUser () {
         return Storage.Session.get('user', '')
     },
+    logout () {
+        return new Promise((resolve) => {
+            Storage.Session.remove('user')
+
+            resolve()
+        })
+    },
     login (context, credentials) {
         return Http
             .post(context, 'users/login', credentials)

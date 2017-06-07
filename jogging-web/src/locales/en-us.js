@@ -3,10 +3,22 @@ export default {
     'password': 'Password',
     'email': 'E-mail',
     'error.login.404': 'No user has been found with that e-mail address.',
+    'error.login.403': 'You can\'t log in right now, there is probably something wrong with our servers.',
     'error.login.400': 'That password does not match the given e-mail address.',
     'signUp': 'Sign Up',
     'myJogs': 'My Jogs',
     'manageUsers': 'Manage Users',
     'manageJogs': 'Manage Jogs',
-    'loggedAs': 'Logged as:'
+    'loggedAs': 'Logged as:',
+    'id': 'ID',
+    'distance': 'Distance',
+    'startedAt': 'Date',
+    'duration': 'Duration',
+    'actions': 'Actions',
+    'oneMinute': '1 minute',
+    'minutes': 'minutes',
+    'createJog': 'Create Jog',
+    'logout': 'Log Out',
+    'hint.editJog': 'Click to edit this jog.',
+    'hint.removeJog': 'Click to remove this jog.'
 }

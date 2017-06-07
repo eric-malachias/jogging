@@ -41,6 +41,9 @@ export default {
 </script>
 
 <style scoped>
+    .navigator {
+        text-align: center;
+    }
     .router-link-active {
         color: rgba(0, 0, 0, 0.8);
     }

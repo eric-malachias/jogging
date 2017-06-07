@@ -1,6 +1,9 @@
 <template>
     <div class="footer-panel">
-        <div v-if="isLogged()">{{ t('loggedAs') }} {{ getName() }}</div>
+        <div v-if="isLogged()">
+            {{ t('loggedAs') }} {{ getName() }}
+            (<a class="link logout" @click="logout()">{{ t('logout') }}</a>)
+        </div>
     </div>
 </template>
 
@@ -18,10 +21,22 @@ export default {
         },
         isLogged () {
             return !!Auth.getUser()
+        },
+        logout () {
+            Auth.logout(this)
+                .then(() => {
+                    this.$router.push('/login')
+                })
         }
     }
 }
 </script>
 
 <style scoped>
+    .footer-panel {
+        text-align: center;
+    }
+    .logout {
+        cursor: pointer;
+    }
 </style>
