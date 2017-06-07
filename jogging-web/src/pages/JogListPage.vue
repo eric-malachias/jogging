@@ -1,6 +1,6 @@
 <template>
     <div id="jog-list-page" class="container">
-        <div class="control-group">
+        <div class="main-actions">
             <button class="btn btn-primary" @click="createJog()">{{ t('createJog') }}</button>
         </div>
         <table v-if="loaded" class="table">
@@ -121,6 +121,9 @@ export default {
 </script>
 
 <style scoped>
+    .main-actions {
+        padding: 15px 0;
+    }
     .pagination-container {
         text-align: center;
     }
