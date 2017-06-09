@@ -9,13 +9,17 @@
 <script>
 import FooterPanel from '@/components/FooterPanel'
 import Navigator from '@/components/Navigator'
+import Auth from '@/services/Auth'
 
 export default {
     components: {
         FooterPanel,
         Navigator
     },
-    name: 'app'
+    name: 'app',
+    beforeCreate () {
+        Auth.checkUser()
+    }
 }
 </script>
 

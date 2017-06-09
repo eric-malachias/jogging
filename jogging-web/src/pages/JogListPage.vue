@@ -93,7 +93,7 @@ export default {
         },
         loadJogs (page) {
             Http
-                .get(this, `users/${Auth.getUser().id}/jogs`, {
+                .get(this, `users/${Auth.user.id}/jogs`, {
                     params: {
                         page: page || this.pagination.current_page || 1
                     }

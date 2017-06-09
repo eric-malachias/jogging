@@ -17,10 +17,10 @@ export default {
     },
     methods: {
         getName () {
-            return Auth.getUser().name
+            return Auth.user.name
         },
         isLogged () {
-            return !!Auth.getUser()
+            return !!Auth.user
         },
         logout () {
             Auth.logout(this)
