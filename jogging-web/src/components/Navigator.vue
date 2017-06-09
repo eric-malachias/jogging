@@ -8,33 +8,45 @@
 </template>
 
 <script>
+import Auth from '@/services/Auth'
+
+const PERMISSION_NOT_LOGGED = 'not-logged'
+const PERMISSION_REGULAR = 'regular'
+const PERMISSION_MANAGER = 'manager'
+const PERMISSION_ADMIN = 'admin'
+
 export default {
     name: 'navigator',
     data () {
         return {
             pages: [{
                 name: 'signUp',
-                url: '/sign-up'
+                url: '/sign-up',
+                permissions: [PERMISSION_NOT_LOGGED]
             }, {
                 name: 'login',
-                url: '/login'
+                url: '/login',
+                permissions: [PERMISSION_NOT_LOGGED]
             }, {
                 name: 'myJogs',
-                url: '/jogs'
+                url: '/jogs',
+                permissions: [PERMISSION_REGULAR, PERMISSION_MANAGER, PERMISSION_ADMIN]
             }, {
                 name: 'manageUsers',
-                url: '/manage/users'
+                url: '/manage/users',
+                permissions: [PERMISSION_MANAGER, PERMISSION_ADMIN]
             }, {
                 name: 'manageJogs',
-                url: '/manage/jogs'
+                url: '/manage/jogs',
+                permissions: [PERMISSION_ADMIN]
             }]
         }
     },
     methods: {
         getPages () {
-            const names = ['signUp', 'login']
+            const permission = Auth.user.role || PERMISSION_NOT_LOGGED
 
-            return this.pages.filter(page => names.includes(page.name))
+            return this.pages.filter(page => page.permissions.includes(permission))
         }
     }
 }
