@@ -35,8 +35,8 @@
 <script>
 import Auth from '@/services/Auth'
 import Http from '@/services/Http'
-import moment from 'moment'
 import Pagination from 'vue-bootstrap-pagination'
+import Jog from '@/services/Jog'
 
 export default {
     components: {
@@ -62,12 +62,7 @@ export default {
                 return jog.duration
             }
 
-            const startedAt = moment(jog.started_at)
-            const endedAt = moment(jog.ended_at)
-
-            const duration = moment.duration(endedAt.diff(startedAt)).asMinutes()
-
-            jog.duration = duration
+            jog.duration = Jog.calculateDuration(jog.started_at, jog.ended_at)
 
             return jog.duration
         },

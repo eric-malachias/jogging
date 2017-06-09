@@ -1,3 +1,5 @@
+const MESSAGE_BAD_REQUEST = 'Some of your information has failed our validation.'
+
 export default {
     'login': 'Log In',
     'password': 'Password',
@@ -23,12 +25,17 @@ export default {
     'hint.removeJog': 'Click to remove this jog.',
     'speed': 'Speed',
     'name': 'Name',
-    'error.signUp.400': 'Some of your information has failed our validation.',
+    'error.signUp.400': MESSAGE_BAD_REQUEST,
     'error.validation.required': 'This field is required.',
     'error.validation.email': 'This e-mail address is invalid.',
     'error.validation.unique': 'There is already a user using that e-mail address.',
     'error.validation.password': 'Your password should be at least 6-characters-long.',
     'hint.dismissAlert': 'Click to dismiss this alert.',
     'error.page.404': 'The requested page could not be found.',
-    'error.page.403': 'The access to this page is restricted. Are you sure you should be here?'
+    'error.page.403': 'The access to this page is restricted. Are you sure you should be here?',
+    'jog': 'Jog',
+    'saveJog': 'Save Jog',
+    'error.jogs.400': MESSAGE_BAD_REQUEST,
+    'error.validation.after': 'The duration must be greater than 0.',
+    'success.jog.saved': 'Your jog has been saved successfully.'
 }

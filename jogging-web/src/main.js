@@ -8,6 +8,8 @@ import VueTranslate from 'vue-translate-plugin'
 import Auth from '@/services/Auth'
 import Filter from '@/services/Filter'
 
+Auth.checkUser()
+
 Vue.use(Resource)
 Vue.use(VueTranslate)
 

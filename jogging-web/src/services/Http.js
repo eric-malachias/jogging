@@ -14,9 +14,12 @@ export default {
         return this.request(context, 'put', args)
     },
     request (context, method, args) {
-        return VueHttp[method](...args)
-            .catch(err => {
-                context.error = err
-            })
+        return new Promise(resolve => {
+            VueHttp[method](...args)
+                .then(resolve)
+                .catch(err => {
+                    context.error = err
+                })
+        })
     }
 }
