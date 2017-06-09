@@ -4,7 +4,7 @@
             <div class="col-sm-12">
                 <h1>{{ t('login') }}</h1>
 
-                <alert v-if="error" type="danger" dismissable="true" :content="t(`error.login.${error.status}`)" @dismiss="error = null"></alert>
+                <alert v-if="error" type="danger" dismissable="true" :content="t(`error.login.${error.status}`)" @dismiss="error = ''"></alert>
                 <div class="form-group">
                     <input class="form-control" type="text" :placeholder="t('email')" v-model="email" @keypress.enter="login()">
                 </div>

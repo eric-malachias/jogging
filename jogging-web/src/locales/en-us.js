@@ -21,5 +21,12 @@ export default {
     'logout': 'Log Out',
     'hint.editJog': 'Click to edit this jog.',
     'hint.removeJog': 'Click to remove this jog.',
-    'speed': 'Speed'
+    'speed': 'Speed',
+    'name': 'Name',
+    'error.signUp.400': 'Some of your information has failed our validation.',
+    'error.validation.required': 'This field is required.',
+    'error.validation.email': 'This e-mail address is invalid.',
+    'error.validation.unique': 'There is already a user using that e-mail address.',
+    'error.validation.password': 'Your password should be at least 6-characters-long.',
+    'hint.dismissAlert': 'Click to dismiss this alert.'
 }

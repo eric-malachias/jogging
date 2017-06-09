@@ -1,7 +1,7 @@
 <template>
     <div class="alert alert-dismissable" :class="getClass()">
         <span class="glyphicon" :class="getIcon()"></span>
-        <span v-if="getDismissable()" class="close" data-dismiss="alert" aria-label="close" title="close" @click="dismiss()">×</span>
+        <span v-if="getDismissable()" class="close" data-dismiss="alert" :aria-label="t('hint.dismissAlert')" :title="t('hint.dismissAlert')" @click="dismiss()">×</span>
         {{ content }}
     </div>
 </template>
