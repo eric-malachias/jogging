@@ -28,5 +28,7 @@ export default {
     'error.validation.email': 'This e-mail address is invalid.',
     'error.validation.unique': 'There is already a user using that e-mail address.',
     'error.validation.password': 'Your password should be at least 6-characters-long.',
-    'hint.dismissAlert': 'Click to dismiss this alert.'
+    'hint.dismissAlert': 'Click to dismiss this alert.',
+    'error.page.404': 'The requested page could not be found.',
+    'error.page.403': 'The access to this page is restricted. Are you sure you should be here?'
 }
