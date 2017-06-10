@@ -4,9 +4,7 @@
 
         <alert v-if="success" type="success" dismissable="true" :content="t('success.jog.saved')" @dismiss="success = false"></alert>
         <alert v-if="error" type="danger" dismissable="true" :content="t(`error.jogs.${error.status}`)" @dismiss="error = ''"></alert>
-        <div class="form-group">
-            <input class="form-control" type="text" :placeholder="t('startedAt')" v-model="jog.started_at" @keypress.enter="saveJog()">
-        </div>
+        <date-time-picker v-model="jog.started_at" :date-placeholder="t('startedAtDate')" :time-placeholder="t('startedAtTime')" @return="saveJog()"></date-time-picker>
         <alert v-if="isInvalid('started_at')" type="danger" :dismissable="false" :content="t(`error.${error.body.started_at[0]}`)"></alert>
         <div class="form-group">
             <input class="form-control" type="text" :placeholder="t('distance')" v-model="jog.distance" @keypress.enter="saveJog()">
@@ -25,10 +23,12 @@
 import Alert from '@/components/Alert'
 import Http from '@/services/Http'
 import Jog from '@/services/Jog'
+import DateTimePicker from '@/components/DateTimePicker'
 
 export default {
     components: {
-        Alert
+        Alert,
+        DateTimePicker
     },
     data () {
         return {
@@ -37,12 +37,22 @@ export default {
             jog: {
                 id: this.$route.params.id
             },
+            startedAt: {
+                date: '',
+                time: ''
+            },
             success: ''
         }
     },
     watch: {
         'jog.ended_at' (endedAt) {
             this.duration = Jog.calculateDuration(this.jog.started_at, endedAt)
+        },
+        'startedAt.date' (date) {
+            this.updateStartAt()
+        },
+        'startedAt.time' (time) {
+            this.updateStartAt()
         }
     },
     created () {

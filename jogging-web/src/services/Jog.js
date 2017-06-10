@@ -14,8 +14,6 @@ export default {
 
         const endedAt = startedAt.add(duration, 'minutes').format('YYYY-MM-DD HH:mm:ss')
 
-        console.log(endedAt)
-
         return endedAt
     }
 }

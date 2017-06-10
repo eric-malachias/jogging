@@ -11,7 +11,7 @@ export default {
     'myJogs': 'My Jogs',
     'manageUsers': 'Manage Users',
     'manageJogs': 'Manage Jogs',
-    'loggedAs': 'Logged as:',
+    'loggedAs': 'Logged in as:',
     'id': 'ID',
     'distance': 'Distance',
     'startedAt': 'Date',
@@ -37,5 +37,7 @@ export default {
     'saveJog': 'Save Jog',
     'error.jogs.400': MESSAGE_BAD_REQUEST,
     'error.validation.after': 'The duration must be greater than 0.',
-    'success.jog.saved': 'Your jog has been saved successfully.'
+    'success.jog.saved': 'Your jog has been saved successfully.',
+    'startedAtDate': 'Date',
+    'startedAtTime': 'Time'
 }
