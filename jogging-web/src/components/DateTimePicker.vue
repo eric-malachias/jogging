@@ -65,6 +65,9 @@ export default {
 
             return time.format('HH:mm')
         },
+        isEmpty () {
+            return !this.date && !this.time
+        },
         updateDateAndTime () {
             if (this.updating) {
                 return
@@ -84,6 +87,11 @@ export default {
             this.time = value.format('HH:mm')
         },
         updateValue () {
+            if (this.isEmpty()) {
+                this.$emit('input', '')
+                return
+            }
+
             const value = this.getDate() + ' ' + this.getTime()
 
             this.updating = true
