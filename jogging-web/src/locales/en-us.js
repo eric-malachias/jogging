@@ -39,5 +39,11 @@ export default {
     'error.validation.after': 'The duration must be greater than 0.',
     'success.jog.saved': 'Your jog has been saved successfully.',
     'startedAtDate': 'Date',
-    'startedAtTime': 'Time'
+    'startedAtTime': 'Time',
+    'filterJogs': 'Filter Jogs',
+    'filters': 'Filters',
+    'from': 'From',
+    'to': 'To',
+    'date': 'Date',
+    'time': 'Time'
 }

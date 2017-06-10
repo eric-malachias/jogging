@@ -1,7 +1,39 @@
 <template>
     <div id="jog-list-page" class="container">
+        <h1>{{ t('myJogs') }}</h1>
         <div class="main-actions">
-            <button class="btn btn-primary" @click="createJog()">{{ t('createJog') }}</button>
+            <div class="row">
+                <div class="col-xs-6">
+                    <button class="btn btn-default" @click="showFilters = !showFilters">
+                        {{ t('filterJogs') }}
+                        <span v-if="!showFilters && getFilterCount()" class="badge">{{ getFilterCount() }}</span>
+                    </button>
+                </div>
+                <div class="col-xs-6">
+                    <button class="btn btn-primary pull-right" @click="createJog()">{{ t('createJog') }}</button>
+                </div>
+            </div>
+            <div :class="showFilters ? '' : 'hidden'" class="filters">
+                <div class="panel panel-default">
+                    <div class="panel-heading">{{ t('filters') }}</div>
+                    <div class="panel-body">
+                        <div class="col-sm-6">
+                            <strong>
+                                {{ t('from') }}
+                                (<a class="link clear-button" @click="filters.from = ''">{{ t('clear') }}</a>)
+                            </strong>
+                            <date-time-picker v-model="filters.from"></date-time-picker>
+                        </div>
+                        <div class="col-sm-6">
+                            <strong>
+                                {{ t('to') }}
+                                (<a class="link clear-button" @click="filters.to = ''">{{ t('clear') }}</a>)
+                            </strong>
+                            <date-time-picker v-model="filters.to"></date-time-picker>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <table v-if="loaded" class="table">
             <thead>
@@ -37,26 +69,53 @@ import Auth from '@/services/Auth'
 import Http from '@/services/Http'
 import Pagination from 'vue-bootstrap-pagination'
 import Jog from '@/services/Jog'
+import DateTimePicker from '@/components/DateTimePicker'
+import _ from 'lodash'
 
 export default {
     components: {
-        Pagination
+        Pagination,
+        DateTimePicker
     },
     data () {
         return {
+            filters: {
+                from: '',
+                to: ''
+            },
             loaded: false,
             jogs: [],
             pagination: {},
             paginationOptions: {
                 offset: 1,
                 alwaysShowPrevNext: true
-            }
+            },
+            showFilters: false,
+            _loadJogs: null
         }
     },
     created () {
         this.loadJogs()
     },
+    watch: {
+        'filters.from' () {
+            this.applyFilters()
+        },
+        'filters.to' () {
+            this.applyFilters()
+        }
+    },
     methods: {
+        applyFilters () {
+            if (this._loadJogs) {
+                this._loadJogs(1)
+                return
+            }
+
+            this._loadJogs = _.debounce(this.loadJogs, 200).bind(this)
+
+            return this.applyFilters()
+        },
         calculateDuration (jog) {
             if (jog.duration) {
                 return jog.duration
@@ -86,11 +145,22 @@ export default {
         editJog (jog) {
             this.$router.push(`/jogs/${jog.id}`)
         },
+        getFilterCount () {
+            let count = 0
+
+            for (const key in this.filters) {
+                count += (this.filters[key] && 1) || 0
+            }
+
+            return count
+        },
         loadJogs (page) {
             Http
                 .get(this, `users/${Auth.user.id}/jogs`, {
                     params: {
-                        page: page || this.pagination.current_page || 1
+                        page: page || this.pagination.current_page || 1,
+                        before: this.filters.to,
+                        after: this.filters.from
                     }
                 })
                 .then(response => {
@@ -116,6 +186,16 @@ export default {
 </script>
 
 <style scoped>
+    .clear-button {
+        cursor: pointer;
+    }
+    .filters {
+        margin-bottom: -15px;
+        margin-top: 15px;
+    }
+    .filter.hidden {
+        display: none;
+    }
     .main-actions {
         padding: 15px 0;
     }

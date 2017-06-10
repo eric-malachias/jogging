@@ -3,12 +3,12 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    <datepicker v-model="date" format="yyyy-MM-dd" input-class="form-control" :placeholder="t('startedAtDate')"></datepicker>
+                    <datepicker v-model="date" format="yyyy-MM-dd" input-class="form-control" :placeholder="datePlaceholder || t('date')"></datepicker>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <input class="form-control" type="text" :placeholder="t('startedAtTime')" v-model="time" maxlength="8" @blur="updateDateAndTime(true)" @keypress.enter="$emit('return')">
+                    <input class="form-control" type="text" :placeholder="timePlaceholder || t('time')" v-model="time" maxlength="8" @blur="updateDateAndTime()" @keypress.enter="$emit('return')">
                 </div>
             </div>
         </div>
@@ -27,7 +27,8 @@ export default {
     data () {
         return {
             date: '',
-            time: ''
+            time: '',
+            updating: false
         }
     },
     watch: {
@@ -42,6 +43,10 @@ export default {
         }
     },
     methods: {
+        clearDateAndTime () {
+            this.date = ''
+            this.time = ''
+        },
         getDate () {
             let date = moment(this.date)
 
@@ -51,8 +56,8 @@ export default {
 
             return date.format('YYYY-MM-DD')
         },
-        getTime (time = null) {
-            time = moment(time || this.time, ['H:m', 'h:m a'])
+        getTime () {
+            let time = moment(this.time, ['H:m', 'h:m a'])
 
             if (!time.isValid()) {
                 time = moment()
@@ -60,7 +65,15 @@ export default {
 
             return time.format('HH:mm')
         },
-        updateDateAndTime (force = false) {
+        updateDateAndTime () {
+            if (this.updating) {
+                return
+            }
+            if (!this.value) {
+                this.clearDateAndTime()
+                return
+            }
+
             let value = moment(this.value, ['YYYY-MM-DD H:m'])
 
             if (!value.isValid()) {
@@ -68,17 +81,17 @@ export default {
             }
 
             this.date = value.toDate()
-
-            const timeString = value.format('HH:mm')
-
-            if (force || this.getTime() !== this.getTime(timeString)) {
-                this.time = timeString
-            }
+            this.time = value.format('HH:mm')
         },
         updateValue () {
             const value = this.getDate() + ' ' + this.getTime()
 
+            this.updating = true
             this.$emit('input', value)
+
+            setTimeout(() => {
+                this.updating = false
+            }, 1)
         }
     }
 }
