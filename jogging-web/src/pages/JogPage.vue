@@ -17,7 +17,8 @@
         </div>
         <alert v-if="isInvalid('ended_at')" type="danger" :dismissable="false" :content="t(`error.${error.body.ended_at[0]}`)"></alert>
 
-        <input class="btn btn-primary btn-block-sm pull-right" type="submit" @click="saveJog()" :value="t('saveJog')">
+        <button class="btn btn-default btn-block-sm" type="submit" @click="goBack()">« My Jogs</button>
+        <button class="btn btn-primary btn-block-sm pull-right" type="submit" @click="saveJog()">{{ t('saveJog') }}</button>
     </div>
 </template>
 

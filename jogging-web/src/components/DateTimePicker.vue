@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    <datepicker v-model="date" format="yyyy-MM-dd" input-class="form-control" :placeholder="datePlaceholder || t('date')"></datepicker>
+                    <datepicker v-model="date" format="dd/MM/yyyy" input-class="form-control" :placeholder="datePlaceholder || t('date')"></datepicker>
                 </div>
             </div>
             <div class="col-sm-6">

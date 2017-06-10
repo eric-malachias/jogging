@@ -35,7 +35,11 @@
                 </div>
             </div>
         </div>
-        <table v-if="loaded" class="table">
+        <div class="wrapper">
+            <alert v-if="success" type="success" dismissable="true" :content="t('success.jog.removed')" @dismiss="success = false" timer="5"></alert>
+            <alert v-if="error" type="danger" dismissable="true" :content="t(`error.jogs.${error.status}`)" @dismiss="error = ''"></alert>
+        </div>
+        <table class="table">
             <thead>
                 <tr>
                     <th>{{ t('startedAt') }}</th>
@@ -45,7 +49,7 @@
                     <th>{{ t('actions') }}</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody v-if="pagination.total > 0">
                 <tr v-for="(jog, index) in jogs" :key="jog.id">
                     <td>{{ jog.started_at | date }}</td>
                     <td>{{ jog.distance | distance }}</td>
@@ -57,9 +61,14 @@
                     </td>
                 </tr>
             </tbody>
+            <tbody v-else class="no-jogs">
+                <tr v-if="!pagination.total">
+                    <td colspan="5">{{ t('noJogs') }}</td>
+                </tr>
+            </tbody>
         </table>
         <div class="pagination-container">
-            <pagination v-if="loaded" :pagination="pagination" :callback="loadJogs" :options="paginationOptions"></pagination>
+            <pagination v-if="pagination.total > 1" :pagination="pagination" :callback="loadJogs" :options="paginationOptions"></pagination>
         </div>
     </div>
 </template>
@@ -71,19 +80,21 @@ import Pagination from 'vue-bootstrap-pagination'
 import Jog from '@/services/Jog'
 import DateTimePicker from '@/components/DateTimePicker'
 import _ from 'lodash'
+import Alert from '@/components/Alert'
 
 export default {
     components: {
         Pagination,
-        DateTimePicker
+        DateTimePicker,
+        Alert
     },
     data () {
         return {
+            error: '',
             filters: {
                 from: '',
                 to: ''
             },
-            loaded: false,
             jogs: [],
             pagination: {},
             paginationOptions: {
@@ -91,6 +102,7 @@ export default {
                 alwaysShowPrevNext: true
             },
             showFilters: false,
+            success: false,
             _loadJogs: null
         }
     },
@@ -139,6 +151,10 @@ export default {
 
             return jog.speed
         },
+        clearAlerts () {
+            this.error = ''
+            this.success = false
+        },
         createJog () {
             this.$router.push('/jogs/new')
         },
@@ -166,13 +182,15 @@ export default {
                 .then(response => {
                     this.jogs = response.body.data
                     this.pagination = response.body
-                    this.loaded = true
                 })
         },
         removeJog (jog, index) {
+            this.clearAlerts()
+
             Http
                 .delete(this, `jogs/${jog.id}`)
                 .then(response => {
+                    this.success = true
                     this.jogs.splice(index, 1)
                     this.loadJogs(
                         this.jogs.length > 0
@@ -198,6 +216,9 @@ export default {
     }
     .main-actions {
         padding: 15px 0;
+    }
+    .no-jogs {
+        text-align: center;
     }
     .pagination-container {
         text-align: center;

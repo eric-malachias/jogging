@@ -37,9 +37,9 @@ export default {
     'saveJog': 'Save Jog',
     'error.jogs.400': MESSAGE_BAD_REQUEST,
     'error.validation.after': 'The duration must be greater than 0.',
-    'success.jog.saved': 'Your jog has been saved successfully.',
+    'success.jog.saved': 'Your jog has been successfully saved.',
     'startedAtDate': 'Date',
-    'startedAtTime': 'Time',
+    'startedAtTime': 'Time (hh:mm)',
     'filterJogs': 'Filter Jogs',
     'filters': 'Filters',
     'from': 'From',
@@ -48,5 +48,7 @@ export default {
     'time': 'Time',
     'distanceInMeters': 'Distance (meters)',
     'durationInMinutes': 'Duration (minutes)',
-    'error.validation.numeric': 'You can only enter numbers.'
+    'error.validation.numeric': 'You can only enter numbers.',
+    'success.jog.removed': 'Your jog has been successfully removed.',
+    'noJogs': 'You don\'t have any jogs.'
 }
