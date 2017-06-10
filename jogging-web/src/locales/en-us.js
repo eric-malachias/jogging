@@ -45,5 +45,8 @@ export default {
     'from': 'From',
     'to': 'To',
     'date': 'Date',
-    'time': 'Time'
+    'time': 'Time',
+    'distanceInMeters': 'Distance (meters)',
+    'durationInMinutes': 'Duration (minutes)',
+    'error.validation.numeric': 'You can only enter numbers.'
 }

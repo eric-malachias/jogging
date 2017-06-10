@@ -2,16 +2,18 @@
     <div id="jog-page" class="container">
         <h1>{{ t('jog') }}</h1>
 
-        <alert v-if="success" type="success" dismissable="true" :content="t('success.jog.saved')" @dismiss="success = false"></alert>
-        <alert v-if="error" type="danger" dismissable="true" :content="t(`error.jogs.${error.status}`)" @dismiss="error = ''"></alert>
+        <div class="wrapper">
+            <alert v-if="success" type="success" dismissable="true" :content="t('success.jog.saved')" @dismiss="success = false"></alert>
+            <alert v-if="error" type="danger" dismissable="true" :content="t(`error.jogs.${error.status}`)" @dismiss="error = ''"></alert>
+        </div>
         <date-time-picker v-model="jog.started_at" :date-placeholder="t('startedAtDate')" :time-placeholder="t('startedAtTime')" @return="saveJog()"></date-time-picker>
         <alert v-if="isInvalid('started_at')" type="danger" :dismissable="false" :content="t(`error.${error.body.started_at[0]}`)"></alert>
         <div class="form-group">
-            <input class="form-control" type="text" :placeholder="t('distance')" v-model="jog.distance" @keypress.enter="saveJog()">
+            <input class="form-control" type="text" :placeholder="t('distanceInMeters')" v-model="jog.distance" @keypress.enter="saveJog()">
         </div>
         <alert v-if="isInvalid('distance')" type="danger" :dismissable="false" :content="t(`error.${error.body.distance[0]}`)"></alert>
         <div class="form-group">
-            <input class="form-control" type="text" :placeholder="t('duration')" v-model="duration" @keypress.enter="saveJog()" maxlength="3">
+            <input class="form-control" type="text" :placeholder="t('durationInMinutes')" v-model="duration" @keypress.enter="saveJog()" maxlength="3">
         </div>
         <alert v-if="isInvalid('ended_at')" type="danger" :dismissable="false" :content="t(`error.${error.body.ended_at[0]}`)"></alert>
 
