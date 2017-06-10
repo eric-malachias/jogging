@@ -34,6 +34,7 @@ export default {
 
 <style scoped>
     .footer-panel {
+        margin-top: 15px;
         text-align: center;
     }
     .logout {

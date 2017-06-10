@@ -1,8 +1,7 @@
 <template>
     <div class="navigator">
-        <span v-for="(page, index) in getPages()" :key="page.name">
+        <span v-for="(page, index) in getPages()" :key="page.name" class="navigator-item">
             <router-link :to="page.url">{{ t(page.name) }}</router-link>
-            <span v-if="index !== getPages().length - 1" class="separator"> | </span>
         </span>
     </div>
 </template>
@@ -52,14 +51,37 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    $bg-color: #333;
+    $bg-hover-color: darken($bg-color, 10%);
+    $bg-active-color: darken($bg-hover-color, 10%);
+
     .navigator {
+        background-color: $bg-color;
+        box-shadow: 2px 0 2px rgba(black, 0.3);
         text-align: center;
-    }
-    .router-link-active {
-        color: rgba(0, 0, 0, 0.8);
-    }
-    .separator {
-        color: rgba(0, 0, 0, 0.3);
+        width: 100%;
+
+        .navigator-item {
+            display: inline-block;
+
+            a {
+                background-color: $bg-color;
+                color: white;
+                display: inline-block;
+                padding: 15px;
+                text-decoration: none;
+                transition: all 0.3s;
+                width: 120px;
+
+                &:hover {
+                    background-color: $bg-hover-color;
+                }
+
+                &.router-link-exact-active {
+                    background-color: $bg-active-color;
+                }
+            }
+        }
     }
 </style>
