@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 
-class JogPolicy extends Policy
+class UserPolicy extends Policy
 {
     public function before($user, $ability)
     {
