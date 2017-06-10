@@ -35,7 +35,8 @@ export default {
             duration: '',
             error: '',
             jog: {
-                id: this.$route.params.id
+                id: this.$route.params.id,
+                started_at: ''
             },
             startedAt: {
                 date: '',

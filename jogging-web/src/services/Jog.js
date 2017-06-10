@@ -12,8 +12,12 @@ export default {
     calculateEndedAt (startedAt, duration) {
         startedAt = moment(startedAt)
 
-        const endedAt = startedAt.add(duration, 'minutes').format('YYYY-MM-DD HH:mm:ss')
+        const endedAt = startedAt.add(duration, 'minutes')
 
-        return endedAt
+        if (!endedAt.isValid()) {
+            return null
+        }
+
+        return endedAt.format('YYYY-MM-DD HH:mm:ss')
     }
 }
