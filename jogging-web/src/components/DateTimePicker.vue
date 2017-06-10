@@ -80,7 +80,9 @@ export default {
             let value = moment(this.value, ['YYYY-MM-DD H:m'])
 
             if (!value.isValid()) {
-                value = moment()
+                this.date = moment().toDate()
+                this.time = '00:00'
+                return
             }
 
             this.date = value.toDate()
