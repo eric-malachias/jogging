@@ -6,23 +6,17 @@ use App\Models\User;
 
 class UserPolicy extends Policy
 {
-    public function before($user, $ability)
+    public function view(User $loggedUser, User $user)
     {
-        if ($user->isAdmin() || $user->isManager()) {
-            return true;
-        }
+        return $loggedUser->hasMoreAccess($user) || $user->is($loggedUser);
     }
-    public function view(User $user, User $loggedUser)
+    public function edit(User $loggedUser, User $user)
     {
-        return $user->is($loggedUser);
+        return $loggedUser->hasMoreAccess($user) || $user->is($loggedUser);
     }
-    public function edit(User $user, User $loggedUser)
+    public function delete(User $loggedUser, User $user)
     {
-        return $user->is($loggedUser);
-    }
-    public function delete(User $user, User $loggedUser)
-    {
-        return $user->is($loggedUser);
+        return $loggedUser->hasMoreAccess($user) || $user->is($loggedUser);
     }
     public function create(User $loggedUser)
     {
@@ -30,6 +24,6 @@ class UserPolicy extends Policy
     }
     public function viewAll(User $loggedUser)
     {
-        return false;
+        return $loggedUser->isManagerOrAdmin();
     }
 }

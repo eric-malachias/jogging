@@ -2,21 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Mockery;
 use App\Models\Jog;
 use App\Repositories\JogRepository;
-use App\Models\User;
 use App\Models\Role;
-use JWTAuth;
-use App\Repositories\RoleRepository;
 use Illuminate\Http\Response;
 
-class JogControllerTest extends TestCase
+class JogControllerTest extends AbstractControllerTest
 {
-    use DatabaseTransactions;
-
     protected function getController()
     {
         return Mockery::mock(JogController::class)->makePartial();
@@ -29,22 +22,6 @@ class JogControllerTest extends TestCase
 
         return factory(Jog::class)->create([
             'owner_id' => $user->id,
-        ]);
-    }
-    protected function createUser($roleName = Role::REGULAR)
-    {
-        return factory(User::class)->create([
-            'role_id' => app(RoleRepository::class)->findByNameOrFail($roleName),
-        ]);
-    }
-    protected function getToken($user)
-    {
-        return 'Bearer ' . JWTAuth::fromUser($user);
-    }
-    protected function callWithToken($user, $method, $url, $parameters = [])
-    {
-        return $this->call($method, $url, $parameters, [], [], [
-            'HTTP_Authorization' => $this->getToken($user),
         ]);
     }
 

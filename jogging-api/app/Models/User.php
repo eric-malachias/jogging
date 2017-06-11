@@ -38,9 +38,24 @@ class User extends Authenticatable
     {
         return $this->role->isManager();
     }
+    public function isManagerOrAdmin()
+    {
+        return $this->isManager() || $this->isAdmin();
+    }
     public function isRegular()
     {
         return $this->role->isRegular();
+    }
+    public function hasMoreAccess($user)
+    {
+        if ($this->isAdmin() && !$user->isAdmin()) {
+            return true;
+        }
+        if ($this->isManager() && $user->isRegular()) {
+            return true;
+        }
+
+        return false;
     }
 
     public static function boot()

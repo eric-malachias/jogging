@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Models\Jog;
+use App\Models\User;
 use App\Policies\JogPolicy;
 use App\Policies\UserPolicy;
 

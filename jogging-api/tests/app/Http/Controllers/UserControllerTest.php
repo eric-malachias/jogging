@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Mockery;
-use App\Models\User;
 use App\Http\Requests\Request;
 use App\Repositories\UserRepository;
+use App\Models\Role;
+use App\Models\User;
+use Illuminate\Http\Response;
 
-class UserControllerTest extends TestCase
+class UserControllerTest extends AbstractControllerTest
 {
-    use DatabaseTransactions;
-
     protected function getController()
     {
         return Mockery::mock(UserController::class)->makePartial();
@@ -21,6 +19,7 @@ class UserControllerTest extends TestCase
     {
         return sprintf('%s@example.com', str_random(100));
     }
+
     public function loginProvider()
     {
         $email = $this->getRandomEmail();
@@ -46,6 +45,91 @@ class UserControllerTest extends TestCase
             'email' => $loginEmail,
             'password' => $loginPassword,
         ]);
+
+        $this->assertEquals($statusCode, $response->status());
+    }
+    public function viewAllStatusProvider()
+    {
+        return [
+            [Role::REGULAR, Response::HTTP_FORBIDDEN],
+            [Role::MANAGER, Response::HTTP_OK],
+            [Role::ADMIN, Response::HTTP_OK],
+        ];
+    }
+    /**
+     * @dataProvider viewAllStatusProvider
+     */
+    public function testGetAllShouldRespondWithCorrectStatus($roleName, $statusCode)
+    {
+        $user = $this->createUser($roleName);
+        $token = $this->getToken($user);
+
+        $response = $this->callWithToken($user, 'GET', '/users');
+
+        $this->assertEquals($statusCode, $response->status());
+    }
+    public function roleHierarchyStatusProvider()
+    {
+        return [
+            [Role::REGULAR, Role::REGULAR, Response::HTTP_FORBIDDEN],
+            [Role::REGULAR, Role::MANAGER, Response::HTTP_FORBIDDEN],
+            [Role::REGULAR, Role::ADMIN, Response::HTTP_FORBIDDEN],
+            [Role::MANAGER, Role::REGULAR, Response::HTTP_OK],
+            [Role::MANAGER, Role::MANAGER, Response::HTTP_FORBIDDEN],
+            [Role::MANAGER, Role::ADMIN, Response::HTTP_FORBIDDEN],
+            [Role::ADMIN, Role::REGULAR, Response::HTTP_OK],
+            [Role::ADMIN, Role::MANAGER, Response::HTTP_OK],
+            [Role::ADMIN, Role::ADMIN, Response::HTTP_FORBIDDEN],
+        ];
+    }
+    /**
+     * @dataProvider roleHierarchyStatusProvider
+     */
+    public function testPutOneShouldRespondWithCorrectStatus($sourceRoleName, $targetRoleName, $statusCode)
+    {
+        $sourceUser = $this->createUser($sourceRoleName);
+        $targetUser = $this->createUser($targetRoleName);
+
+        $response = $this->callWithToken(
+            $sourceUser,
+            'PUT',
+            '/users/' . $targetUser->id,
+            $targetUser->getAttributes()
+        );
+
+        $this->assertEquals($statusCode, $response->status());
+    }
+    /**
+     * @dataProvider roleHierarchyStatusProvider
+     */
+    public function testGetOneShouldRespondWithCorrectStatus($sourceRoleName, $targetRoleName, $statusCode)
+    {
+        $sourceUser = $this->createUser($sourceRoleName);
+        $targetUser = $this->createUser($targetRoleName);
+
+        $response = $this->callWithToken(
+            $sourceUser,
+            'GET',
+            '/users/' . $targetUser->id,
+            $targetUser->getAttributes()
+        );
+
+        $this->assertEquals($statusCode, $response->status());
+    }
+    /**
+     * @dataProvider roleHierarchyStatusProvider
+     */
+    public function testDeleteOneShouldRespondWithCorrectStatus($sourceRoleName, $targetRoleName, $statusCode)
+    {
+        $sourceUser = $this->createUser($sourceRoleName);
+        $targetUser = $this->createUser($targetRoleName);
+
+        $response = $this->callWithToken(
+            $sourceUser,
+            'DELETE',
+            '/users/' . $targetUser->id,
+            $targetUser->getAttributes()
+        );
 
         $this->assertEquals($statusCode, $response->status());
     }
