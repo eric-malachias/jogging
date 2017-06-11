@@ -33,6 +33,7 @@ Route::group([
     Route::get('/users/{user}', 'UserController@getOne')->middleware('can:view,user');
 
     Route::get('/users/{user}/jogs', 'UserController@getJogs');
+    Route::get('/users/{user}/jogs/weekly-report', 'UserController@getWeeklyJogReport');
 
     Route::delete('/jogs/{jog}', 'JogController@deleteOne')->middleware('can:delete,jog');
     Route::get('/jogs/{jog}', 'JogController@getOne')->middleware('can:view,jog');

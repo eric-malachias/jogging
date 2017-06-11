@@ -54,6 +54,14 @@ class UserController extends Controller
 
         return response()->ok($jogs);
     }
+    public function getWeeklyJogReport(User $user)
+    {
+        $report = $user
+            ->getWeeklyJogReport()
+            ->paginate(10);
+
+        return response()->ok($report);
+    }
     public function deleteOne(User $user)
     {
         $user->delete();

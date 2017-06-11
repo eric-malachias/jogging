@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use Tests\TestCase;
 
-class RoleTest extends TestCase
+class RoleRepositoryTest extends TestCase
 {
     protected function getRepository()
     {

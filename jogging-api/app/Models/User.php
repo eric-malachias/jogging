@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Repositories\RoleRepository;
 use Hash;
+use App\Repositories\JogRepository;
 
 class User extends Authenticatable
 {
@@ -60,5 +61,11 @@ class User extends Authenticatable
     public function owns(Jog $jog)
     {
         return (int)$jog->owner_id === (int)$this->id;
+    }
+    public function getWeeklyJogReport()
+    {
+        return app(JogRepository::class)
+            ->getWeeklyReport()
+            ->byOwner($this->id);
     }
 }

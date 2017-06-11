@@ -50,4 +50,8 @@ class Jog extends Model
     {
         $query->orderByDesc('started_at');
     }
+    public function scopeByOwner($query, $id)
+    {
+        $query->where('owner_id', $id);
+    }
 }
