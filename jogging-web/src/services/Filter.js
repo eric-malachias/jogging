@@ -22,8 +22,18 @@ const Filter = {
 
             return value + ' ' + translate('minutes')
         },
-        date (value) {
-            return moment(value).format('DD/MM/YYYY HH:mm')
+        date (value, timezone = null) {
+            if (timezone === 'auto') {
+                timezone = (new Date()).getTimezoneOffset() / 60
+            }
+
+            value = moment.utc(value)
+
+            if (timezone) {
+                value.utcOffset(-timezone)
+            }
+
+            return value.format('DD/MM/YYYY HH:mm')
         },
         meters (value) {
             return `${value} m`

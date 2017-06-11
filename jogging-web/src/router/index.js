@@ -6,6 +6,7 @@ import JogPage from '@/pages/JogPage'
 import JogListPage from '@/pages/JogListPage'
 import SignUpPage from '@/pages/SignUpPage'
 import ErrorPage from '@/pages/ErrorPage'
+import UserListPage from '@/pages/UserListPage'
 
 Vue.use(Router)
 
@@ -19,10 +20,19 @@ function makeCondition (condition, next) {
 
     next(new Error(ERROR_FORBIDDEN))
 }
+function is (roles) {
+    return Auth.user && roles.includes(Auth.user.role)
+}
 
 const conditions = {
+    isAdmin (from, to, next) {
+        return makeCondition(is(['admin']), next)
+    },
     isLogged (from, to, next) {
         return makeCondition(Auth.user, next)
+    },
+    isManager (from, to, next) {
+        return makeCondition(is(['manager', 'admin']), next)
     },
     isNotLogged (from, to, next) {
         return makeCondition(!Auth.user, next)
@@ -47,6 +57,10 @@ const router = new Router({
             path: '/sign-up',
             component: SignUpPage,
             beforeEnter: conditions.isNotLogged
+        }, {
+            path: '/manage/users',
+            component: UserListPage,
+            beforeEnter: conditions.isManager
         }, {
             path: '*',
             component: ErrorPage

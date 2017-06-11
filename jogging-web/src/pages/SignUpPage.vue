@@ -53,7 +53,7 @@ export default {
         },
         signUp () {
             Http
-                .post(this, 'users', this.getData())
+                .post(this, 'users/sign-up', this.getData())
                 .then(response => {
                     Auth.saveUser(response.body)
                     this.$router.push('/jogs')

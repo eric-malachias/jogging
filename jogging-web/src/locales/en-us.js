@@ -54,5 +54,14 @@ export default {
     'totalDistance': 'Total Distance',
     'totalDuration': 'Total Duration',
     'averageSpeed': 'Average Speed',
-    'weekOf': 'Week Of'
+    'weekOf': 'Week Of',
+    'error.users.403': 'You are not authorized to access this.',
+    'noUsers': 'No manageable users have been found.',
+    'role': 'Role',
+    'createdAt': 'Created At',
+    'updatedAt': 'Updated At',
+    'admin': 'Admin',
+    'manager': 'Manager',
+    'regular': 'Regular',
+    'success.user.removed': 'The user has been successfully removed.'
 }
