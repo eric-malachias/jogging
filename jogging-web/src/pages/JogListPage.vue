@@ -40,7 +40,7 @@ export default {
             showFilters: false,
             refresh: {
                 list: 0,
-                rerport: 0
+                report: 0
             }
         }
     },
