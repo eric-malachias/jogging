@@ -4,7 +4,14 @@ import { Http as VueHttp } from 'vue-resource'
 export default new Vue({
     data () {
         return {
-            loading: 0
+            loading: 0,
+
+            HTTP_SUCCESS: 200,
+            HTTP_CREATED: 201,
+            HTTP_BAD_REQUEST: 400,
+            HTTP_FORBIDDEN: 403,
+            HTTP_NOT_FOUND: 404,
+            HTTP_SERVER_ERROR: 500
         }
     },
     methods: {

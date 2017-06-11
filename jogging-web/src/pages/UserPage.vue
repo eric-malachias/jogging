@@ -50,6 +50,13 @@ export default {
             this.load()
         }
     },
+    watch: {
+        error (error) {
+            if (error.status === Http.HTTP_FORBIDDEN) {
+                this.goBack()
+            }
+        }
+    },
     methods: {
         clearAlerts () {
             this.error = ''

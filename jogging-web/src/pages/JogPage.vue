@@ -49,6 +49,11 @@ export default {
         }
     },
     watch: {
+        error (error) {
+            if (error.status === Http.HTTP_FORBIDDEN) {
+                this.goBack()
+            }
+        },
         'jog.ended_at' (endedAt) {
             this.duration = Jog.calculateDuration(this.jog.started_at, endedAt)
         },
