@@ -83,4 +83,22 @@ class User extends Authenticatable
             ->getWeeklyReport()
             ->byOwner($this->id);
     }
+    public function scopeIsRole($query, array $roleNames)
+    {
+        $query->whereHas('role', function ($query) use ($roleNames) {
+            $query->whereIn('name', $roleNames);
+        });
+    }
+    public function scopeIsRegular($query)
+    {
+        $query->isRole([Role::REGULAR]);
+    }
+    public function scopeIsRegularOrManager($query)
+    {
+        $query->isRole([Role::REGULAR, Role::MANAGER]);
+    }
+    public function scopeOrderByName($query)
+    {
+        $query->orderBy('name');
+    }
 }

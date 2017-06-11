@@ -52,6 +52,10 @@ class Repository
     {
         return $this->getModel()->paginate(...$arguments);
     }
+    public function with(...$arguments)
+    {
+        return $this->getModel()->with(...$arguments);
+    }
     protected function getModel()
     {
         return app($this->model);

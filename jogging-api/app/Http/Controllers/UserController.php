@@ -68,9 +68,20 @@ class UserController extends Controller
 
         return response()->ok($user);
     }
-    public function getAll(UserRepository $userRepository)
+    public function getAll(UserRepository $userRepository, Request $request)
     {
-        $users = $userRepository->paginate(10);
+        $user = $request->user();
+
+        $users = $userRepository
+            ->with('role')
+            ->when($user->isManager(), function ($query) {
+                return $query->isRegular();
+            })
+            ->when($user->isAdmin(), function ($query) {
+                return $query->isRegularOrManager();
+            })
+            ->orderByName()
+            ->paginate(10);
 
         return response()->ok($users);
     }
