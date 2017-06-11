@@ -19,5 +19,8 @@ export default {
         }
 
         return endedAt.format('YYYY-MM-DD HH:mm:ss')
+    },
+    calculateSpeed (distance, speed) {
+        return (distance / 1000) / (speed / 60)
     }
 }

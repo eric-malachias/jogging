@@ -35,41 +35,44 @@
                 </div>
             </div>
         </div>
-        <div class="wrapper">
-            <alert v-if="success" type="success" dismissable="true" :content="t('success.jog.removed')" @dismiss="success = false" timer="5"></alert>
-            <alert v-if="error" type="danger" dismissable="true" :content="t(`error.jogs.${error.status}`)" @dismiss="error = ''"></alert>
+        <div class="jogs">
+            <div class="wrapper">
+                <alert v-if="success" type="success" dismissable="true" :content="t('success.jog.removed')" @dismiss="success = false" timer="5"></alert>
+                <alert v-if="error" type="danger" dismissable="true" :content="t(`error.jogs.${error.status}`)" @dismiss="error = ''"></alert>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>{{ t('startedAt') }}</th>
+                        <th>{{ t('distance') }}</th>
+                        <th>{{ t('duration') }}</th>
+                        <th>{{ t('speed') }}</th>
+                        <th>{{ t('actions') }}</th>
+                    </tr>
+                </thead>
+                <tbody v-if="pagination.total > 0">
+                    <tr v-for="(jog, index) in jogs" :key="jog.id">
+                        <td>{{ jog.started_at | date }}</td>
+                        <td>{{ jog.distance | meters }}</td>
+                        <td>{{ calculateDuration(jog) | minutes }}</td>
+                        <td>{{ calculateSpeed(jog) | speed }}</td>
+                        <td>
+                            <button class="btn btn-primary btn-xs" :title="t('hint.editJog')" @click="editJog(jog)"><span class="glyphicon glyphicon-pencil"></span></button>
+                            <button class="btn btn-danger btn-xs" :title="t('hint.removeJog')" @click="removeJog(jog, index)"><span class="glyphicon glyphicon-remove"></span></button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody v-else class="no-jogs text-center">
+                    <tr v-if="!pagination.total">
+                        <td colspan="5">{{ t('noJogs') }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="pagination-container text-center" v-if="pagination.last_page > 1">
+                <pagination :pagination="pagination" :callback="loadJogs" :options="paginationOptions"></pagination>
+            </div>
         </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>{{ t('startedAt') }}</th>
-                    <th>{{ t('distance') }}</th>
-                    <th>{{ t('duration') }}</th>
-                    <th>{{ t('speed') }}</th>
-                    <th>{{ t('actions') }}</th>
-                </tr>
-            </thead>
-            <tbody v-if="pagination.total > 0">
-                <tr v-for="(jog, index) in jogs" :key="jog.id">
-                    <td>{{ jog.started_at | date }}</td>
-                    <td>{{ jog.distance | distance }}</td>
-                    <td>{{ calculateDuration(jog) | duration }}</td>
-                    <td>{{ calculateSpeed(jog) | speed }}</td>
-                    <td>
-                        <button class="btn btn-primary btn-xs" :title="t('hint.editJog')" @click="editJog(jog)"><span class="glyphicon glyphicon-pencil"></span></button>
-                        <button class="btn btn-danger btn-xs" :title="t('hint.removeJog')" @click="removeJog(jog, index)"><span class="glyphicon glyphicon-remove"></span></button>
-                    </td>
-                </tr>
-            </tbody>
-            <tbody v-else class="no-jogs">
-                <tr v-if="!pagination.total">
-                    <td colspan="5">{{ t('noJogs') }}</td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="pagination-container">
-            <pagination v-if="pagination.total > 1" :pagination="pagination" :callback="loadJogs" :options="paginationOptions"></pagination>
-        </div>
+        <jog-weekly-report></jog-weekly-report>
     </div>
 </template>
 
@@ -81,12 +84,14 @@ import Jog from '@/services/Jog'
 import DateTimePicker from '@/components/DateTimePicker'
 import _ from 'lodash'
 import Alert from '@/components/Alert'
+import JogWeeklyReport from './JogListPage/JogWeeklyReport'
 
 export default {
     components: {
         Pagination,
         DateTimePicker,
-        Alert
+        Alert,
+        JogWeeklyReport
     },
     data () {
         return {
@@ -142,12 +147,10 @@ export default {
                 return jog.speed
             }
 
-            const distance = jog.distance / 1000
-            const duration = this.calculateDuration(jog) / 60
+            const distance = jog.distance
+            const duration = this.calculateDuration(jog)
 
-            const speed = distance / duration
-
-            jog.speed = speed
+            jog.speed = Jog.calculateSpeed(distance, duration)
 
             return jog.speed
         },
@@ -216,12 +219,6 @@ export default {
     }
     .main-actions {
         padding: 15px 0;
-    }
-    .no-jogs {
-        text-align: center;
-    }
-    .pagination-container {
-        text-align: center;
     }
     table {
         table-layout: fixed;

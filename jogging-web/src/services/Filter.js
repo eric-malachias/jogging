@@ -5,9 +5,14 @@ function translate () {
     return Vue.prototype.$translate.text(...arguments)
 }
 
-export default {
+const Filter = {
     boot () {
-        Vue.filter('duration', function (value) {
+        for (const name in this.filters) {
+            Vue.filter(name, this.filters[name])
+        }
+    },
+    filters: {
+        minutes (value) {
             if (value === 0) {
                 return '0'
             }
@@ -16,17 +21,28 @@ export default {
             }
 
             return value + ' ' + translate('minutes')
-        })
-        Vue.filter('date', function (value) {
+        },
+        date (value) {
             return moment(value).format('DD/MM/YYYY HH:mm')
-        })
-        Vue.filter('distance', function (value) {
-            return `${value}m`
-        })
-        Vue.filter('speed', function (value) {
-            const [a, b] = (Math.round(value * 10) / 10).toString().split('.')
+        },
+        meters (value) {
+            return `${value} m`
+        },
+        speed (value) {
+            return Filter.filters.round(Math.round(value * 10) / 10) + ' km/h'
+        },
+        kilometers (value) {
+            return Filter.filters.round(value / 1000) + ' km'
+        },
+        hours (value) {
+            return Filter.filters.round(value / 60) + ' h'
+        },
+        round (value) {
+            const [a, b] = value.toString().split('.')
 
-            return [a, (b || '' + '0').slice(-1)].join('.') + 'km/h'
-        })
+            return [a, (b || '' + '0').slice(-1)].join('.')
+        }
     }
 }
+
+export default Filter
