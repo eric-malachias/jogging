@@ -35,12 +35,12 @@ const Filter = {
             return Filter.filters.round(value / 1000) + ' km'
         },
         hours (value) {
-            return Filter.filters.round(value / 60) + ' h'
+            return Filter.filters.round(value / 60, 2) + ' h'
         },
-        round (value) {
+        round (value, precision = 1) {
             const [a, b] = value.toString().split('.')
 
-            return [a, (b || '' + '0').slice(-1)].join('.')
+            return [a, ((b || '') + '0'.repeat(precision)).substr(0, precision)].join('.')
         }
     }
 }
