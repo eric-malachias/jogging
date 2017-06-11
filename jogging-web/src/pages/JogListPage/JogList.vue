@@ -68,7 +68,7 @@ export default {
     },
     watch: {
         refreshToken () {
-            this.load()
+            this.load(1)
         }
     },
     methods: {
@@ -120,7 +120,7 @@ export default {
             Http
                 .delete(this, `jogs/${jog.id}`)
                 .then(response => {
-                    this.refreshToken++
+                    this.$emit('jog-remove')
                     this.success = true
                     this.jogs.splice(index, 1)
                     this.load(
@@ -134,7 +134,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     table {
         table-layout: fixed;
     }

@@ -76,7 +76,7 @@ export default {
             const year = Math.floor(yearWeek / 100)
             const week = yearWeek - year * 100
 
-            return moment().year(year).week(week).subtract(6, 'days').format('DD/MM/YYYY')
+            return moment().year(year).week(week).format('DD/MM/YYYY')
         },
         load () {
             Http

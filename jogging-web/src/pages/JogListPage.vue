@@ -13,44 +13,23 @@
                     <button class="btn btn-primary pull-right" @click="createJog()">{{ t('createJog') }}</button>
                 </div>
             </div>
-            <div :class="showFilters ? '' : 'hidden'" class="filters">
-                <div class="panel panel-default">
-                    <div class="panel-heading">{{ t('filters') }}</div>
-                    <div class="panel-body">
-                        <div class="col-sm-6">
-                            <strong>
-                                {{ t('from') }}
-                                (<a class="link clear-button" @click="filters.from = ''">{{ t('clear') }}</a>)
-                            </strong>
-                            <date-time-picker v-model="filters.from"></date-time-picker>
-                        </div>
-                        <div class="col-sm-6">
-                            <strong>
-                                {{ t('to') }}
-                                (<a class="link clear-button" @click="filters.to = ''">{{ t('clear') }}</a>)
-                            </strong>
-                            <date-time-picker v-model="filters.to"></date-time-picker>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <jog-filters v-model="filters" :hidden="!showFilters"></jog-filters>
         </div>
-        <jog-list :filters="filters" :refresh-token="refresh.list"></jog-list>
+        <jog-list :filters="filters" :refresh-token="refresh.list" @jog-remove="loadWeeklyReport()"></jog-list>
         <jog-weekly-report :refresh-token="refresh.report"></jog-weekly-report>
     </div>
 </template>
 
 <script>
-import DateTimePicker from '@/components/DateTimePicker'
-import _ from 'lodash'
 import JogWeeklyReport from './JogListPage/JogWeeklyReport'
 import JogList from './JogListPage/JogList'
+import JogFilters from './JogListPage/JogFilters'
 
 export default {
     components: {
-        DateTimePicker,
         JogWeeklyReport,
-        JogList
+        JogList,
+        JogFilters
     },
     data () {
         return {
@@ -62,29 +41,18 @@ export default {
             refresh: {
                 list: 0,
                 rerport: 0
-            },
-            _loadJogs: null
+            }
         }
     },
     watch: {
         'filters.from' () {
-            this.applyFilters()
+            this.loadJogs()
         },
         'filters.to' () {
-            this.applyFilters()
+            this.loadJogs()
         }
     },
     methods: {
-        applyFilters () {
-            if (this._loadJogs) {
-                this._loadJogs(1)
-                return
-            }
-
-            this._loadJogs = _.debounce(this.loadJogs, 200).bind(this)
-
-            return this.applyFilters()
-        },
         createJog () {
             this.$router.push('/jogs/new')
         },
@@ -99,22 +67,15 @@ export default {
         },
         loadJogs () {
             this.refresh.list++
+        },
+        loadWeeklyReport () {
+            this.refresh.report++
         }
     }
 }
 </script>
 
 <style scoped>
-    .clear-button {
-        cursor: pointer;
-    }
-    .filters {
-        margin-bottom: -15px;
-        margin-top: 15px;
-    }
-    .filter.hidden {
-        display: none;
-    }
     .main-actions {
         padding: 15px 0;
     }
