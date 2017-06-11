@@ -1,6 +1,11 @@
 <template>
     <div class="container">
         <h1>{{ t('manageUsers') }}</h1>
+
+        <div class="main-actions clearfix">
+            <button class="btn btn-primary pull-right" @click="create()">{{ t('createUser') }}</button>
+        </div>
+
         <div class="user-list">
             <div class="wrapper">
                 <alert v-if="success" type="success" dismissable="true" :content="t('success.user.removed')" @dismiss="success = false" timer="5"></alert>
@@ -73,8 +78,11 @@ export default {
             this.error = ''
             this.success = false
         },
+        create () {
+            this.$router.push('/manage/users/new')
+        },
         edit (user) {
-            this.$router.push(`/users/${user.id}`)
+            this.$router.push(`/manage/users/${user.id}`)
         },
         load (page) {
             Http
@@ -108,4 +116,7 @@ export default {
 </script>
 
 <style scoped>
+    .main-actions {
+        padding: 15px 0;
+    }
 </style>

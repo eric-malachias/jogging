@@ -63,5 +63,12 @@ export default {
     'admin': 'Admin',
     'manager': 'Manager',
     'regular': 'Regular',
-    'success.user.removed': 'The user has been successfully removed.'
+    'success.user.removed': 'The user has been successfully removed.',
+    'noName': 'No Name',
+    'saveUser': 'Save User',
+    'success.user.saved': 'The user has been successfully saved.',
+    'createUser': 'Create User',
+    'backToUsers': '« Users',
+    'backToMyJogs': '« My Jogs',
+    'error.users.400': MESSAGE_BAD_REQUEST
 }

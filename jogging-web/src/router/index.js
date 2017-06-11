@@ -7,6 +7,7 @@ import JogListPage from '@/pages/JogListPage'
 import SignUpPage from '@/pages/SignUpPage'
 import ErrorPage from '@/pages/ErrorPage'
 import UserListPage from '@/pages/UserListPage'
+import UserPage from '@/pages/UserPage'
 
 Vue.use(Router)
 
@@ -60,6 +61,10 @@ const router = new Router({
         }, {
             path: '/manage/users',
             component: UserListPage,
+            beforeEnter: conditions.isManager
+        }, {
+            path: '/manage/users/:id',
+            component: UserPage,
             beforeEnter: conditions.isManager
         }, {
             path: '*',
