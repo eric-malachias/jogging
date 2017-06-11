@@ -53,5 +53,6 @@ export default {
     'noJogs': 'You don\'t have any jogs.',
     'totalDistance': 'Total Distance',
     'totalDuration': 'Total Duration',
-    'averageSpeed': 'Average Speed'
+    'averageSpeed': 'Average Speed',
+    'weekOf': 'Week Of'
 }

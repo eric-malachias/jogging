@@ -72,7 +72,7 @@
                 <pagination :pagination="pagination" :callback="loadJogs" :options="paginationOptions"></pagination>
             </div>
         </div>
-        <jog-weekly-report></jog-weekly-report>
+        <jog-weekly-report :refresh-token="refreshToken"></jog-weekly-report>
     </div>
 </template>
 
@@ -108,6 +108,7 @@ export default {
             },
             showFilters: false,
             success: false,
+            refreshToken: 0,
             _loadJogs: null
         }
     },
@@ -193,6 +194,7 @@ export default {
             Http
                 .delete(this, `jogs/${jog.id}`)
                 .then(response => {
+                    this.refreshToken++
                     this.success = true
                     this.jogs.splice(index, 1)
                     this.loadJogs(

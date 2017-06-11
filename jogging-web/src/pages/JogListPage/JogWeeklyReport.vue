@@ -34,11 +34,13 @@ import Auth from '@/services/Auth'
 import Http from '@/services/Http'
 import Jog from '@/services/Jog'
 import Pagination from 'vue-bootstrap-pagination'
+import moment from 'moment'
 
 export default {
     components: {
         Pagination
     },
+    props: ['refresh-token'],
     data () {
         return {
             error: '',
@@ -53,6 +55,11 @@ export default {
     created () {
         this.load()
     },
+    watch: {
+        refreshToken () {
+            this.load()
+        }
+    },
     methods: {
         calculateSpeed (item) {
             if (item.average_speed) {
@@ -66,7 +73,10 @@ export default {
             return item.average_speed
         },
         getWeek (yearWeek) {
-            return yearWeek
+            const year = Math.floor(yearWeek / 100)
+            const week = yearWeek - year * 100
+
+            return moment().year(year).week(week).subtract(6, 'days').format('DD/MM/YYYY')
         },
         load () {
             Http
