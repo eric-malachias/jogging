@@ -20,7 +20,7 @@ class UserPolicy extends Policy
     }
     public function create(User $loggedUser)
     {
-        return false;
+        return $loggedUser->isManagerOrAdmin();
     }
     public function viewAll(User $loggedUser)
     {

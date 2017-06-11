@@ -34,7 +34,7 @@ class UserController extends Controller
 
         return $this->respondWithToken($user);
     }
-    public function postOne(UserEditRequest $request, UserRepository $userRepository)
+    public function signUp(UserEditRequest $request, UserRepository $userRepository)
     {
         $user = $userRepository->create($request->only([
             'name',
@@ -88,5 +88,9 @@ class UserController extends Controller
     public function getOne(User $user)
     {
         return response()->ok($user);
+    }
+    public function postOne(UserEditRequest $request, User $user)
+    {
+        return response()->ok();
     }
 }

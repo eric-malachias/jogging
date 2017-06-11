@@ -133,4 +133,23 @@ class UserControllerTest extends AbstractControllerTest
 
         $this->assertEquals($statusCode, $response->status());
     }
+    /**
+     * @dataProvider roleHierarchyStatusProvider
+     */
+    public function testPostOneShouldRespondWithCorrectStatus($sourceRoleName, $targetRoleName, $statusCode)
+    {
+        $sourceUser = $this->createUser($sourceRoleName);
+        $targetUser = $this->createUser($targetRoleName);
+
+        $targetUser->delete();
+
+        $response = $this->callWithToken(
+            $sourceUser,
+            'POST',
+            '/users',
+            $targetUser->getAttributes()
+        );
+
+        $this->assertEquals($statusCode, $response->status());
+    }
 }

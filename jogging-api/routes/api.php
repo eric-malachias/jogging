@@ -17,7 +17,7 @@ Route::get('/', function () {
     return response()->ok('Jogging API');
 });
 
-Route::post('/users', 'UserController@postOne');
+Route::post('/users/sign-up', 'UserController@signUp');
 Route::post('/users/login', 'UserController@login');
 
 Route::group([
@@ -28,6 +28,7 @@ Route::group([
     });
 
     Route::get('/users', 'UserController@getAll')->middleware('can:viewAll,App\Models\User');
+    Route::post('/users', 'UserController@postOne')->middleware('can:create,App\Models\User');
     Route::delete('/users/{user}', 'UserController@deleteOne')->middleware('can:delete,user');
     Route::put('/users/{user}', 'UserController@putOne')->middleware('can:edit,user');
     Route::get('/users/{user}', 'UserController@getOne')->middleware('can:view,user');
