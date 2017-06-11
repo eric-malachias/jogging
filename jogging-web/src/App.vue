@@ -1,6 +1,7 @@
 <template>
     <div id="app">
         <navigator></navigator>
+        <loader></loader>
         <router-view></router-view>
         <footer-panel></footer-panel>
     </div>
@@ -9,11 +10,13 @@
 <script>
 import FooterPanel from '@/components/FooterPanel'
 import Navigator from '@/components/Navigator'
+import Loader from '@/components/Loader'
 
 export default {
     components: {
         FooterPanel,
-        Navigator
+        Navigator,
+        Loader
     },
     name: 'app'
 }
