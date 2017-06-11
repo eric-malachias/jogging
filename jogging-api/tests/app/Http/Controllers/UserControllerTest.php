@@ -150,6 +150,9 @@ class UserControllerTest extends AbstractControllerTest
             $targetUser->getAttributes()
         );
 
-        $this->assertEquals($statusCode, $response->status());
+        $this->assertEquals(
+            $statusCode === Response::HTTP_OK ? Response::HTTP_CREATED : $statusCode,
+            $response->status()
+        );
     }
 }

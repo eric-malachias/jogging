@@ -80,6 +80,7 @@ class UserController extends Controller
             'name',
             'email',
             'password',
+            'role_id',
         ]));
         $user->save();
 
@@ -89,8 +90,15 @@ class UserController extends Controller
     {
         return response()->ok($user);
     }
-    public function postOne(UserEditRequest $request, User $user)
+    public function postOne(UserEditRequest $request, UserRepository $userRepository)
     {
-        return response()->ok();
+        $user = $userRepository->create($request->only([
+            'name',
+            'email',
+            'password',
+            'role_id',
+        ]));
+
+        return response()->created($user);
     }
 }
