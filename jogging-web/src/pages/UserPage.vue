@@ -20,6 +20,18 @@
         </div>
         <alert v-if="isInvalid('password')" type="danger" :dismissable="false" :content="t(`error.${error.body.password[0]}`)"></alert>
 
+        <div v-if="roles.length > 0 && isAdmin() && !isSelf()" class="role">
+            <div class="form-group">
+                <select class="form-control" v-model="user.role_id">
+                    <option value="" disabled hidden>{{ t('role') }}</option>
+                    <option v-for="role in roles" :key="role.id" :value="role.id" v-if="role.name !== 'admin'">
+                        {{ t(role.name) }}
+                    </option>
+                </select>
+            </div>
+            <alert v-if="isInvalid('role_id')" type="danger" :dismissable="false" :content="t(`error.${error.body.role_id[0]}`)"></alert>
+        </div>
+
         <button v-if="!isSelf()" class="btn btn-default btn-block-sm" type="submit" @click="goBack()">{{ t('backToUsers') }}</button>
         <button class="btn btn-primary btn-block-sm pull-right" type="submit" @click="save()">{{ t('saveUser') }}</button>
     </div>
@@ -41,12 +53,16 @@ export default {
                 id: this.$route.params.id || (this.isSelf() && Auth.user.id),
                 name: '',
                 email: '',
-                password: ''
+                password: '',
+                role_id: ''
             },
+            roles: [],
             success: ''
         }
     },
     created () {
+        this.loadRoles()
+
         if (!this.isNew()) {
             this.load()
         }
@@ -73,6 +89,9 @@ export default {
         goBack () {
             this.$router.push('/users')
         },
+        isAdmin () {
+            return Auth.isAdmin()
+        },
         isNew () {
             return this.user.id === 'new'
         },
@@ -89,6 +108,13 @@ export default {
                     this.user = response.body
                 })
         },
+        loadRoles () {
+            Http
+                .get(this.roles, 'roles')
+                .then(response => {
+                    this.roles = response.body
+                })
+        },
         save () {
             this.clearAlerts()
 
@@ -100,7 +126,7 @@ export default {
                         return
                     }
 
-                    this.user = response.body
+                    Object.assign(this.user, response.body)
                     this.success = true
 
                     if (this.isSelf()) {
