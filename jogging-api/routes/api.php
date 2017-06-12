@@ -41,4 +41,6 @@ Route::group([
     Route::post('/jogs', 'JogController@postOne')->middleware('can:create,App\Models\Jog');
     Route::put('/jogs/{jog}', 'JogController@putOne')->middleware('can:edit,jog');
     Route::get('/jogs', 'JogController@getAll')->middleware('can:viewAll,App\Models\Jog');
+
+    Route::get('/roles', 'RoleController@getAll')->middleware('can:viewAll,App\Models\Role');
 });

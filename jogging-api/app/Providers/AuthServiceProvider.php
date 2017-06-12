@@ -8,6 +8,8 @@ use App\Models\Jog;
 use App\Models\User;
 use App\Policies\JogPolicy;
 use App\Policies\UserPolicy;
+use App\Models\Role;
+use App\Policies\RolePolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -18,6 +20,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Jog::class => JogPolicy::class,
+        Role::class => RolePolicy::class,
         User::class => UserPolicy::class,
     ];
 

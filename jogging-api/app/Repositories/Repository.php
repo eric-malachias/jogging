@@ -48,6 +48,10 @@ class Repository
 
         return $result;
     }
+    public function get(...$arguments)
+    {
+        return $this->getModel()->get(...$arguments);
+    }
     public function paginate(...$arguments)
     {
         return $this->getModel()->paginate(...$arguments);
