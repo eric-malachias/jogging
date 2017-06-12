@@ -27,7 +27,7 @@ class JogPolicy extends Policy
     }
     public function create(User $user)
     {
-        return true;
+        return $user->isRegular();
     }
     public function viewAll(User $user)
     {

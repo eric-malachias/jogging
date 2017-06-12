@@ -40,8 +40,14 @@ class JogController extends Controller
 
         return response()->ok($jog);
     }
-    public function getAll(JogRepository $jogRepository)
+    public function getAll(JogRepository $jogRepository, Request $request)
     {
-        return response()->ok($jogRepository->paginate(10));
+        $jogs = $jogRepository
+            ->with('owner')
+            ->between($request->before, $request->after)
+            ->latestFirst()
+            ->paginate(10);
+
+        return response()->ok($jogs);
     }
 }
