@@ -29,7 +29,11 @@ export default {
             }, {
                 name: 'myJogs',
                 url: '/jogs',
-                permissions: [PERMISSION_REGULAR, PERMISSION_MANAGER, PERMISSION_ADMIN]
+                permissions: [PERMISSION_REGULAR]
+            }, {
+                name: 'manageJogs',
+                url: '/jogs',
+                permissions: [PERMISSION_ADMIN]
             }, {
                 name: 'manageUsers',
                 url: '/users',
@@ -38,10 +42,6 @@ export default {
                 name: 'myAccount',
                 url: '/me',
                 permissions: [PERMISSION_REGULAR, PERMISSION_MANAGER, PERMISSION_ADMIN]
-            }, {
-                name: 'manageJogs',
-                url: '/jogs',
-                permissions: [PERMISSION_ADMIN]
             }]
         }
     },

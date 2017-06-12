@@ -1,6 +1,7 @@
 <template>
     <div id="jog-list-page" class="container">
-        <h1>{{ t('myJogs') }}</h1>
+        <h1 v-if="isAdmin()">{{ t('manageJogs') }}</h1>
+        <h1 v-else>{{ t('myJogs') }}</h1>
         <div class="main-actions">
             <div class="row">
                 <div class="col-xs-6">
@@ -15,8 +16,8 @@
             </div>
             <jog-filters v-model="filters" :hidden="!showFilters"></jog-filters>
         </div>
-        <jog-list :filters="filters" :refresh-token="refresh.list" @jog-remove="loadWeeklyReport()"></jog-list>
-        <jog-weekly-report :refresh-token="refresh.report"></jog-weekly-report>
+        <jog-list :filters="filters" :refresh-token="refresh.list" @jog-remove="loadWeeklyReport()" :is-admin="isAdmin()"></jog-list>
+        <jog-weekly-report v-if="!isAdmin()" :refresh-token="refresh.report"></jog-weekly-report>
     </div>
 </template>
 
@@ -24,6 +25,7 @@
 import JogWeeklyReport from './JogListPage/JogWeeklyReport'
 import JogList from './JogListPage/JogList'
 import JogFilters from './JogListPage/JogFilters'
+import Auth from '@/services/Auth'
 
 export default {
     components: {
@@ -64,6 +66,9 @@ export default {
             }
 
             return count
+        },
+        isAdmin () {
+            return Auth.isAdmin()
         },
         loadJogs () {
             this.refresh.list++

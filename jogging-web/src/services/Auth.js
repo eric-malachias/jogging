@@ -35,6 +35,12 @@ const Auth = new Vue({
 
             return `Bearer ${user.token}`
         },
+        isAdmin () {
+            return this.isRole('admin')
+        },
+        isRole (role) {
+            return this.user.role === role
+        },
         logout () {
             return new Promise((resolve) => {
                 this.user = ''

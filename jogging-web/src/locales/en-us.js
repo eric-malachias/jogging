@@ -50,7 +50,7 @@ export default {
     'durationInMinutes': 'Duration (minutes)',
     'error.validation.numeric': 'You can only enter numbers.',
     'success.jog.removed': 'Your jog has been successfully removed.',
-    'noJogs': 'You don\'t have any jogs.',
+    'noJogs': 'There are no jogs.',
     'totalDistance': 'Total Distance',
     'totalDuration': 'Total Duration',
     'averageSpeed': 'Average Speed',
@@ -71,5 +71,6 @@ export default {
     'backToUsers': '« Users',
     'backToMyJogs': '« My Jogs',
     'error.users.400': MESSAGE_BAD_REQUEST,
-    'myAccount': 'My Account'
+    'myAccount': 'My Account',
+    'owner': 'Owner'
 }

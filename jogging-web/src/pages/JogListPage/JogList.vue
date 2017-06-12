@@ -11,6 +11,7 @@
                     <th>{{ t('distance') }}</th>
                     <th>{{ t('duration') }}</th>
                     <th>{{ t('speed') }}</th>
+                    <th v-if="isAdmin">{{ t('owner') }}</th>
                     <th>{{ t('actions') }}</th>
                 </tr>
             </thead>
@@ -20,6 +21,11 @@
                     <td>{{ jog.distance | meters }}</td>
                     <td>{{ calculateDuration(jog) | minutes }}</td>
                     <td>{{ calculateSpeed(jog) | speed }}</td>
+                    <td v-if="isAdmin">
+                        <router-link v-if="jog.owner" :to="`/users/${jog.owner.id}`">
+                            {{ jog.owner.name }}
+                        </router-link>
+                    </td>
                     <td>
                         <button class="btn btn-primary btn-xs" :title="t('hint.editJog')" @click="edit(jog)"><span class="glyphicon glyphicon-pencil"></span></button>
                         <button class="btn btn-danger btn-xs" :title="t('hint.removeJog')" @click="remove(jog, index)"><span class="glyphicon glyphicon-remove"></span></button>
@@ -50,7 +56,7 @@ export default {
         Alert,
         Pagination
     },
-    props: ['filters', 'refresh-token'],
+    props: ['filters', 'refresh-token', 'is-admin'],
     data () {
         return {
             error: '',
@@ -102,7 +108,7 @@ export default {
         },
         load (page) {
             Http
-                .get(this, `users/${Auth.user.id}/jogs`, {
+                .get(this, this.isAdmin ? 'jogs' : `users/${Auth.user.id}/jogs`, {
                     params: {
                         page: page || this.pagination.current_page || 1,
                         before: this.filters.to,

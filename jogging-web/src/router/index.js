@@ -20,19 +20,17 @@ function makeCondition (condition, next) {
 
     next(new Error(Http.HTTP_FORBIDDEN))
 }
-function is (roles) {
-    return Auth.user && roles.includes(Auth.user.role)
-}
 
 const conditions = {
-    isAdmin (from, to, next) {
-        return makeCondition(is(['admin']), next)
-    },
     isLogged (from, to, next) {
         return makeCondition(Auth.user, next)
     },
-    isManager (from, to, next) {
-        return makeCondition(is(['manager', 'admin']), next)
+    isInRoles () {
+        const roles = [...arguments]
+
+        return function (from, to, next) {
+            return makeCondition(Auth.user && roles.includes(Auth.user.role), next)
+        }
     },
     isNotLogged (from, to, next) {
         return makeCondition(!Auth.user, next)
@@ -48,11 +46,11 @@ const router = new Router({
         }, {
             path: '/jogs',
             component: JogListPage,
-            beforeEnter: conditions.isLogged
+            beforeEnter: conditions.isInRoles('regular', 'admin')
         }, {
             path: '/jogs/:id',
             component: JogPage,
-            beforeEnter: conditions.isLogged
+            beforeEnter: conditions.isInRoles('regular', 'admin')
         }, {
             path: '/sign-up',
             component: SignUpPage,
@@ -60,11 +58,11 @@ const router = new Router({
         }, {
             path: '/users',
             component: UserListPage,
-            beforeEnter: conditions.isManager
+            beforeEnter: conditions.isInRoles('manager', 'admin')
         }, {
             path: '/users/:id',
             component: UserPage,
-            beforeEnter: conditions.isManager
+            beforeEnter: conditions.isInRoles('manager', 'admin')
         }, {
             path: '/me',
             component: UserPage,
