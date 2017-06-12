@@ -66,6 +66,10 @@ const router = new Router({
             component: UserPage,
             beforeEnter: conditions.isManager
         }, {
+            path: '/me',
+            component: UserPage,
+            beforeEnter: conditions.isLogged
+        }, {
             path: '*',
             component: ErrorPage
         }

@@ -22,6 +22,10 @@ const Auth = new Vue({
         checkUser () {
             this.user = getUser()
         },
+        copyUser (user) {
+            this.user.email = user.email
+            this.user.name = user.name
+        },
         getHeader () {
             const user = this.user
 

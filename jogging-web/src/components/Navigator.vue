@@ -35,6 +35,10 @@ export default {
                 url: '/users',
                 permissions: [PERMISSION_MANAGER, PERMISSION_ADMIN]
             }, {
+                name: 'myAccount',
+                url: '/me',
+                permissions: [PERMISSION_REGULAR, PERMISSION_MANAGER, PERMISSION_ADMIN]
+            }, {
                 name: 'manageJogs',
                 url: '/jogs',
                 permissions: [PERMISSION_ADMIN]

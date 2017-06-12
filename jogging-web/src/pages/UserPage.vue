@@ -20,13 +20,14 @@
         </div>
         <alert v-if="isInvalid('password')" type="danger" :dismissable="false" :content="t(`error.${error.body.password[0]}`)"></alert>
 
-        <button class="btn btn-default btn-block-sm" type="submit" @click="goBack()">{{ t('backToUsers') }}</button>
+        <button v-if="!isSelf()" class="btn btn-default btn-block-sm" type="submit" @click="goBack()">{{ t('backToUsers') }}</button>
         <button class="btn btn-primary btn-block-sm pull-right" type="submit" @click="save()">{{ t('saveUser') }}</button>
     </div>
 </template>
 
 <script>
 import Alert from '@/components/Alert'
+import Auth from '@/services/Auth'
 import Http from '@/services/Http'
 
 export default {
@@ -37,7 +38,7 @@ export default {
         return {
             error: '',
             user: {
-                id: this.$route.params.id,
+                id: this.$route.params.id || (this.isSelf() && Auth.user.id),
                 name: '',
                 email: '',
                 password: ''
@@ -75,6 +76,9 @@ export default {
         isNew () {
             return this.user.id === 'new'
         },
+        isSelf () {
+            return this.$route.path === '/me'
+        },
         isInvalid (field) {
             return this.error && this.error.body && this.error.body[field]
         },
@@ -98,6 +102,10 @@ export default {
 
                     this.user = response.body
                     this.success = true
+
+                    if (this.isSelf()) {
+                        Auth.copyUser(this.user)
+                    }
                 })
         }
     }

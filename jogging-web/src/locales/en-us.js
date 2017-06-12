@@ -70,5 +70,6 @@ export default {
     'createUser': 'Create User',
     'backToUsers': '« Users',
     'backToMyJogs': '« My Jogs',
-    'error.users.400': MESSAGE_BAD_REQUEST
+    'error.users.400': MESSAGE_BAD_REQUEST,
+    'myAccount': 'My Account'
 }
