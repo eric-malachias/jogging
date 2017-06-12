@@ -60,7 +60,7 @@ class Repository
     {
         return $this->getModel()->with(...$arguments);
     }
-    protected function getModel()
+    public function getModel()
     {
         return app($this->model);
     }

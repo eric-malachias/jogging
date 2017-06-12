@@ -14,27 +14,29 @@ class JwtAuth extends JwtBaseMiddleware
     const TOKEN_INVALID = 'token-invalid';
     const TOKEN_USER_NOT_FOUND = 'token-user-not-found';
 
+    public function getAuth()
+    {
+        return $this->auth;
+    }
     public function handle($request, Closure $next)
     {
-        $token = $this->auth->setRequest($request)->getToken();
+        $token = $this->getAuth()->setRequest($request)->getToken();
 
         if (!$token) {
             return response()->unauthorized(static::TOKEN_NOT_PROVIDED);
         }
 
         try {
-            $user = $this->auth->authenticate($token);
-        } catch (TokenExpiredException $e) {
+            $user = $this->getAuth()->authenticate($token);
+        } catch (TokenExpiredException $exception) {
             return response()->unauthorized(static::TOKEN_EXPIRED);
-        } catch (JWTException $e) {
+        } catch (JWTException $exception) {
             return response()->unauthorized(static::TOKEN_INVALID);
         }
 
         if (!$user) {
             return response()->unauthorized(static::TOKEN_USER_NOT_FOUND);
         }
-
-        $this->events->fire('tymon.jwt.valid', $user);
 
         return $next($request);
     }

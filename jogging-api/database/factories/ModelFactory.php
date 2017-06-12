@@ -6,12 +6,11 @@ use Faker\Generator;
 use Carbon\Carbon;
 
 $factory->define(User::class, function (Generator $faker) {
-    static $index = 0;
     static $password;
 
     return [
         'name' => $faker->name,
-        'email' => sprintf('user%d@example.com', ++$index),
+        'email' => $faker->unique->email,
         'password' => $password ?: $password = '123456',
     ];
 });
