@@ -79,10 +79,10 @@ export default {
             this.success = false
         },
         create () {
-            this.$router.push('/manage/users/new')
+            this.$router.push('/users/new')
         },
         edit (user) {
-            this.$router.push(`/manage/users/${user.id}`)
+            this.$router.push(`/users/${user.id}`)
         },
         load (page) {
             Http

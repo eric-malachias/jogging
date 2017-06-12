@@ -20,6 +20,7 @@
 <script>
 import Auth from '@/services/Auth'
 import Alert from '@/components/Alert'
+import User from '@/services/User'
 
 export default {
     components: {
@@ -40,7 +41,7 @@ export default {
                     password: this.password
                 })
                 .then(res => {
-                    this.$router.push('/jogs')
+                    this.$router.push(User.homePage[Auth.user.role])
                 })
         }
     }

@@ -70,7 +70,7 @@ export default {
             return Http.put(this, `users/${this.user.id}`, this.user)
         },
         goBack () {
-            this.$router.push('/manage/users')
+            this.$router.push('/users')
         },
         isNew () {
             return this.user.id === 'new'

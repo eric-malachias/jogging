@@ -32,11 +32,11 @@ export default {
                 permissions: [PERMISSION_REGULAR, PERMISSION_MANAGER, PERMISSION_ADMIN]
             }, {
                 name: 'manageUsers',
-                url: '/manage/users',
+                url: '/users',
                 permissions: [PERMISSION_MANAGER, PERMISSION_ADMIN]
             }, {
                 name: 'manageJogs',
-                url: '/manage/jogs',
+                url: '/jogs',
                 permissions: [PERMISSION_ADMIN]
             }]
         }

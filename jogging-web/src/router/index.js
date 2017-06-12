@@ -8,10 +8,9 @@ import SignUpPage from '@/pages/SignUpPage'
 import ErrorPage from '@/pages/ErrorPage'
 import UserListPage from '@/pages/UserListPage'
 import UserPage from '@/pages/UserPage'
+import Http from '@/services/Http'
 
 Vue.use(Router)
-
-const ERROR_FORBIDDEN = 403
 
 function makeCondition (condition, next) {
     if (condition) {
@@ -19,7 +18,7 @@ function makeCondition (condition, next) {
         return
     }
 
-    next(new Error(ERROR_FORBIDDEN))
+    next(new Error(Http.HTTP_FORBIDDEN))
 }
 function is (roles) {
     return Auth.user && roles.includes(Auth.user.role)
@@ -59,11 +58,11 @@ const router = new Router({
             component: SignUpPage,
             beforeEnter: conditions.isNotLogged
         }, {
-            path: '/manage/users',
+            path: '/users',
             component: UserListPage,
             beforeEnter: conditions.isManager
         }, {
-            path: '/manage/users/:id',
+            path: '/users/:id',
             component: UserPage,
             beforeEnter: conditions.isManager
         }, {
