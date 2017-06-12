@@ -32,7 +32,7 @@ class RoleControllerTest extends AbstractControllerTest
         $user = $this->createUser($roleName);
         $token = $this->getToken($user);
 
-        $response = $this->callWithToken($user, 'GET', '/users');
+        $response = $this->callWithToken($user, 'GET', '/roles');
 
         $this->assertEquals($statusCode, $response->status());
     }
