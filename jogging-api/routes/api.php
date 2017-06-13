@@ -43,4 +43,6 @@ Route::group([
     Route::get('/jogs', 'JogController@getAll')->middleware('can:viewAll,App\Models\Jog');
 
     Route::get('/roles', 'RoleController@getAll')->middleware('can:viewAll,App\Models\Role');
+
+    Route::get('/search/users', 'UserController@search');
 });

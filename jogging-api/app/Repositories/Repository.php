@@ -6,13 +6,9 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Repository
 {
-    public function count(...$arguments)
+    public function __call($name, $args)
     {
-        return $this->getModel()->count(...$arguments);
-    }
-    public function create(...$arguments)
-    {
-        return $this->getModel()->create(...$arguments);
+        return $this->getModel()->__call($name, $args);
     }
     public function find($id)
     {
@@ -34,31 +30,19 @@ class Repository
             $field => $value
         ]);
     }
-    public function findWhere($conditions)
+    public function findWhere(...$conditions)
     {
-        return $this->getModel()->where($conditions)->first();
+        return $this->getModel()->where(...$conditions)->first();
     }
-    public function findWhereOrFail($conditions)
+    public function findWhereOrFail(...$conditions)
     {
-        $result = $this->findWhere($conditions);
+        $result = $this->findWhere(...$conditions);
 
         if (empty($result)) {
-            throw (new ModelNotFoundException)->setModel(get_class($this->getModel()), $conditions);
+            throw (new ModelNotFoundException)->setModel(get_class($this->getModel()), ...$conditions);
         }
 
         return $result;
-    }
-    public function get(...$arguments)
-    {
-        return $this->getModel()->get(...$arguments);
-    }
-    public function paginate(...$arguments)
-    {
-        return $this->getModel()->paginate(...$arguments);
-    }
-    public function with(...$arguments)
-    {
-        return $this->getModel()->with(...$arguments);
     }
     public function getModel()
     {

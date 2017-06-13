@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Repositories\RoleRepository;
 use Hash;
 use App\Repositories\JogRepository;
+use DB;
 
 class User extends Authenticatable
 {
@@ -101,5 +102,13 @@ class User extends Authenticatable
     public function scopeOrderByName($query)
     {
         $query->orderBy('name');
+    }
+    public function scopeFilterByKeyword($query, $keyword)
+    {
+        $query->where('name', 'LIKE', "%{$keyword}%");
+    }
+    public function scopeOrderByNameLength($query)
+    {
+        $this->orderBy(DB::raw('length(name)'));
     }
 }

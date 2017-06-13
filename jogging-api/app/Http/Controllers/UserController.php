@@ -112,4 +112,14 @@ class UserController extends Controller
 
         return response()->created($user);
     }
+    public function search(Request $request, UserRepository $userRepository)
+    {
+        $user = $userRepository
+            ->isRegular()
+            ->filterByKeyword($request->keyword)
+            ->orderByNameLength()
+            ->firstOrFail();
+
+        return response()->ok($user);
+    }
 }

@@ -27,21 +27,4 @@ class RepositoryTest extends TestCase
 
         $this->assertEquals($id, $repository->findOrFail($id));
     }
-    public function testPaginate()
-    {
-        $arguments = [1, 2, 3];
-        $model = Mockery::mock()
-            ->shouldReceive('paginate')
-            ->with(...$arguments)
-            ->once()
-            ->andReturn($arguments)
-            ->getMock();
-        $repository = $this->getRepository();
-        $repository
-            ->shouldReceive('getModel')
-            ->once()
-            ->andReturn($model);
-
-        $this->assertEquals($arguments, $repository->paginate(...$arguments));
-    }
 }
