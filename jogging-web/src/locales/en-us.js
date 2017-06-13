@@ -72,5 +72,6 @@ export default {
     'backToMyJogs': '« My Jogs',
     'error.users.400': MESSAGE_BAD_REQUEST,
     'myAccount': 'My Account',
-    'owner': 'Owner'
+    'owner': 'Owner',
+    'backToManageJogs': '« Manage Jogs'
 }

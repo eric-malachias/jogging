@@ -32,4 +32,7 @@ export default {
     .table {
         margin-bottom: 0;
     }
+    .form-control {
+        box-shadow: none !important;
+    }
 </style>

@@ -17,7 +17,11 @@
         </div>
         <alert v-if="isInvalid('ended_at')" type="danger" :dismissable="false" :content="t(`error.${error.body.ended_at[0]}`)"></alert>
 
-        <button class="btn btn-default btn-block-sm" type="submit" @click="goBack()">{{ t('backToMyJogs') }}</button>
+        <type-ahead v-if="isAdmin()" url="search/users" property="name" :placeholder="t('owner')" v-model="jog.owner" @return="saveJog()"></type-ahead>
+        <alert v-if="isInvalid('owner_id')" type="danger" :dismissable="false" :content="t(`error.${error.body.owner_id[0]}`)"></alert>
+
+        <button v-if="isAdmin()" class="btn btn-default btn-block-sm" type="submit" @click="goBack()">{{ t('backToManageJogs') }}</button>
+        <button v-else class="btn btn-default btn-block-sm" type="submit" @click="goBack()">{{ t('backToMyJogs') }}</button>
         <button class="btn btn-primary btn-block-sm pull-right" type="submit" @click="saveJog()">{{ t('saveJog') }}</button>
     </div>
 </template>
@@ -27,11 +31,14 @@ import Alert from '@/components/Alert'
 import Http from '@/services/Http'
 import Jog from '@/services/Jog'
 import DateTimePicker from '@/components/DateTimePicker'
+import TypeAhead from '@/components/TypeAhead'
+import Auth from '@/services/Auth'
 
 export default {
     components: {
         Alert,
-        DateTimePicker
+        DateTimePicker,
+        TypeAhead
     },
     data () {
         return {
@@ -39,7 +46,9 @@ export default {
             error: '',
             jog: {
                 id: this.$route.params.id,
-                started_at: ''
+                started_at: '',
+                owner: '',
+                owner_id: ''
             },
             startedAt: {
                 date: '',
@@ -56,6 +65,12 @@ export default {
         },
         'jog.ended_at' (endedAt) {
             this.duration = Jog.calculateDuration(this.jog.started_at, endedAt)
+        },
+        'jog.owner' (owner) {
+            this.jog.owner_id = owner && owner.id || null
+        },
+        'jog.owner.id' (id) {
+            this.jog.owner_id = id
         },
         'startedAt.date' (date) {
             this.updateStartAt()
@@ -89,6 +104,12 @@ export default {
         goBack () {
             this.$router.push('/jogs')
         },
+        getUsers () {
+            return []
+        },
+        isAdmin () {
+            return Auth.isAdmin()
+        },
         isNew () {
             return this.jog.id === 'new'
         },
@@ -113,13 +134,10 @@ export default {
                         return
                     }
 
-                    this.jog = response.body
+                    Object.assign(this.jog, response.body)
                     this.success = true
                 })
         }
     }
 }
 </script>
-
-<style scoped>
-</style>
