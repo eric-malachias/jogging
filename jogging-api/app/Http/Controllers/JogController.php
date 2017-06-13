@@ -17,6 +17,8 @@ class JogController extends Controller
     }
     public function getOne(Jog $jog)
     {
+        $jog->load('owner');
+
         return response()->ok($jog);
     }
     public function postOne(JogRequest $request, JogRepository $jogRepository)
@@ -25,6 +27,7 @@ class JogController extends Controller
             'started_at',
             'ended_at',
             'distance',
+            'owner_id',
         ]));
 
         return response()->created($jog);
@@ -35,6 +38,7 @@ class JogController extends Controller
             'started_at',
             'ended_at',
             'distance',
+            'owner_id',
         ]));
         $jog->save();
 

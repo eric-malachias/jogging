@@ -10,6 +10,7 @@ class Jog extends Model
         'started_at',
         'ended_at',
         'distance',
+        'owner_id',
     ];
 
     public function owner()
