@@ -9,7 +9,14 @@
 
         <form-input :label="t('name')" v-model="user.name" @return="save()" :error="error" name="name"></form-input>
         <form-input :label="t('email')" v-model="user.email" @return="save()" :error="error" name="email"></form-input>
-        <form-input :label="t('password')" v-model="user.password" @return="save()" :error="error" name="password" type="password"></form-input>
+
+        <button class="btn btn-default" @click="showPassword = !showPassword">
+            <span v-if="showPassword">{{ t('hidePassword') }}</span>
+            <span v-else>{{ t('showPassword') }}</span>
+        </button>
+        <div v-if="showPassword" class="password-container">
+            <form-input :label="t('password')" v-model="user.password" @return="save()" :error="error" name="password" type="password"></form-input>
+        </div>
 
         <div v-if="roles.length > 0 && isAdmin() && !isSelf()" class="role">
             <div class="form-group">
@@ -23,8 +30,10 @@
             <alert v-if="isInvalid('role_id')" type="danger" :dismissable="false" :content="t(`error.${error.body.role_id[0]}`)"></alert>
         </div>
 
-        <button v-if="!isSelf()" class="btn btn-default btn-block-sm" type="submit" @click="goBack()">{{ t('backToUsers') }}</button>
-        <button class="btn btn-primary btn-block-sm pull-right" type="submit" @click="save()">{{ t('saveUser') }}</button>
+        <div class="clearfix">
+            <button v-if="!isSelf()" class="btn btn-default btn-block-sm" type="submit" @click="goBack()">{{ t('backToUsers') }}</button>
+            <button class="btn btn-primary btn-block-sm pull-right" type="submit" @click="save()">{{ t('saveUser') }}</button>
+        </div>
     </div>
 </template>
 
@@ -42,6 +51,7 @@ export default {
     data () {
         return {
             error: '',
+            showPassword: false,
             user: {
                 id: this.$route.params.id || (this.isSelf() && Auth.user.id),
                 name: '',
@@ -74,12 +84,26 @@ export default {
             this.error = ''
             this.success = false
         },
-        getRequest () {
-            if (this.isNew()) {
-                return Http.post(this, 'users', this.user)
+        getData () {
+            let data = {
+                name: this.user.name,
+                email: this.user.email,
+                role_id: this.user.role_id,
+                password: this.user.password
             }
 
-            return Http.put(this, `users/${this.user.id}`, this.user)
+            if (!this.showPassword || !this.user.password) {
+                delete data.password
+            }
+
+            return data
+        },
+        getRequest () {
+            if (this.isNew()) {
+                return Http.post(this, 'users', this.getData())
+            }
+
+            return Http.put(this, `users/${this.user.id}`, this.getData())
         },
         goBack () {
             this.$router.push('/users')
@@ -134,4 +158,7 @@ export default {
 </script>
 
 <style scoped>
+    .password-container {
+        margin-top: 15px;
+    }
 </style>

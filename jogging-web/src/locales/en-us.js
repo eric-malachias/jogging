@@ -79,5 +79,7 @@ export default {
     'home.firstSteps': 'To start using the app, click on "Sign Up" to create an account or on "Log In" if you already have one. Enjoy!',
     'error.validation.min.numeric': 'The distance must be greater than 0.',
     'jogList': 'Jog List',
-    'weeklyJogReport': 'Weekly Jog Report'
+    'weeklyJogReport': 'Weekly Jog Report',
+    'showPassword': 'Show Password',
+    'hidePassword': 'Hide Password'
 }
