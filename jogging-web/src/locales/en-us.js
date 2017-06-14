@@ -1,12 +1,23 @@
-const MESSAGE_BAD_REQUEST = 'Some of your information has failed our validation.'
+const ERROR_UNAUTHORIZED = 'You are not authorized to access this.'
 
 export default {
+    'error.400': 'Some of your information has failed our validation.',
+    'error.401': ERROR_UNAUTHORIZED,
+    'error.403': ERROR_UNAUTHORIZED,
+    'error.404': 'We could not find what you were looking for.',
+    'error.405': ERROR_UNAUTHORIZED,
+    'error.500': 'An unknown error occurred.',
+    'error.504': 'Parts of our application are malfunctioning.',
+
+    'error.login.400': 'That password does not match the given e-mail address.',
+    'error.login.403': 'You can\'t log in right now, there is probably something wrong with our servers.',
+    'error.login.404': 'No user has been found with that e-mail address.',
+    'error.page.403': 'The access to this page is restricted. Are you sure you should be here?',
+    'error.page.404': 'The requested page could not be found.',
+
     'login': 'Log In',
     'password': 'Password',
     'email': 'E-mail',
-    'error.login.404': 'No user has been found with that e-mail address.',
-    'error.login.403': 'You can\'t log in right now, there is probably something wrong with our servers.',
-    'error.login.400': 'That password does not match the given e-mail address.',
     'signUp': 'Sign Up',
     'myJogs': 'My Jogs',
     'manageUsers': 'Manage Users',
@@ -25,17 +36,13 @@ export default {
     'hint.removeJog': 'Click to remove this jog.',
     'speed': 'Speed',
     'name': 'Name',
-    'error.signUp.400': MESSAGE_BAD_REQUEST,
     'error.validation.required': 'This field is required.',
     'error.validation.email': 'This e-mail address is invalid.',
     'error.validation.unique': 'There is already a user using that e-mail address.',
     'error.validation.password': 'Your password should be at least 6-characters-long.',
     'hint.dismissAlert': 'Click to dismiss this alert.',
-    'error.page.404': 'The requested page could not be found.',
-    'error.page.403': 'The access to this page is restricted. Are you sure you should be here?',
     'jog': 'Jog',
     'saveJog': 'Save Jog',
-    'error.jogs.400': MESSAGE_BAD_REQUEST,
     'error.validation.after': 'The duration must be greater than 0.',
     'success.jog.saved': 'Your jog has been successfully saved.',
     'startedAtDate': 'Date',
@@ -55,7 +62,6 @@ export default {
     'totalDuration': 'Total Duration',
     'averageSpeed': 'Average Speed',
     'weekOf': 'Week Of',
-    'error.users.403': 'You are not authorized to access this.',
     'noUsers': 'No manageable users have been found.',
     'role': 'Role',
     'createdAt': 'Created At',
@@ -70,7 +76,6 @@ export default {
     'createUser': 'Create User',
     'backToUsers': '« Users',
     'backToMyJogs': '« My Jogs',
-    'error.users.400': MESSAGE_BAD_REQUEST,
     'myAccount': 'My Account',
     'owner': 'Owner',
     'backToManageJogs': '« Manage Jogs',
@@ -81,5 +86,6 @@ export default {
     'jogList': 'Jog List',
     'weeklyJogReport': 'Weekly Jog Report',
     'showPassword': 'Show Password',
-    'hidePassword': 'Hide Password'
+    'hidePassword': 'Hide Password',
+    'error.invalid': 'This field is invalid.'
 }
