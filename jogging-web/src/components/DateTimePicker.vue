@@ -3,12 +3,13 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    <datepicker v-model="date" format="dd/MM/yyyy" input-class="form-control" :placeholder="datePlaceholder || t('date')"></datepicker>
+                    <label>{{ datePlaceholder || t('date') }}</label>
+                    <datepicker v-model="date" format="dd/MM/yyyy" input-class="form-control"></datepicker>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <input class="form-control" type="text" :placeholder="timePlaceholder || t('time')" v-model="time" maxlength="8" @blur="updateDateAndTime()" @keypress.enter="$emit('return')">
+                    <form-input v-model="time" :label="timePlaceholder || t('time')" maxlength="5" :only="/[0-9:]/" @blur="updateDateAndTime()" @return="$emit('return')"></form-input>
                 </div>
             </div>
         </div>
@@ -18,10 +19,12 @@
 <script>
 import Datepicker from 'vuejs-datepicker'
 import moment from 'moment'
+import FormInput from '@/components/FormInput'
 
 export default {
     components: {
-        Datepicker
+        Datepicker,
+        FormInput
     },
     props: ['date-placeholder', 'time-placeholder', 'value'],
     data () {

@@ -1,5 +1,6 @@
 <template>
     <div class="weekly-report">
+        <h2>{{ t('weeklyJogReport') }}</h2>
         <table class="table">
             <thead>
                 <tr>

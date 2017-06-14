@@ -8,14 +8,9 @@
         </div>
         <date-time-picker v-model="jog.started_at" :date-placeholder="t('startedAtDate')" :time-placeholder="t('startedAtTime')" @return="saveJog()"></date-time-picker>
         <alert v-if="isInvalid('started_at')" type="danger" :dismissable="false" :content="t(`error.${error.body.started_at[0]}`)"></alert>
-        <div class="form-group">
-            <input class="form-control" type="text" :placeholder="t('distanceInMeters')" v-model="jog.distance" @keypress.enter="saveJog()">
-        </div>
-        <alert v-if="isInvalid('distance')" type="danger" :dismissable="false" :content="t(`error.${error.body.distance[0]}`)"></alert>
-        <div class="form-group">
-            <input class="form-control" type="text" :placeholder="t('durationInMinutes')" v-model="duration" @keypress.enter="saveJog()" maxlength="3">
-        </div>
-        <alert v-if="isInvalid('ended_at')" type="danger" :dismissable="false" :content="t(`error.${error.body.ended_at[0]}`)"></alert>
+
+        <form-input :label="t('distanceInMeters')" name="distance" v-model="jog.distance" @return="saveJog()" :error="error"></form-input>
+        <form-input :label="t('durationInMinutes')" name="ended_at" v-model="duration" @return="saveJog()" maxlength="3" :error="error"></form-input>
 
         <div v-if="isAdmin()" class="owner">
             <type-ahead url="search/users" property="name" :placeholder="t('owner')" v-model="jog.owner" @return="saveJog()"></type-ahead>
@@ -35,12 +30,14 @@ import Jog from '@/services/Jog'
 import DateTimePicker from '@/components/DateTimePicker'
 import TypeAhead from '@/components/TypeAhead'
 import Auth from '@/services/Auth'
+import FormInput from '@/components/FormInput'
 
 export default {
     components: {
         Alert,
         DateTimePicker,
-        TypeAhead
+        TypeAhead,
+        FormInput
     },
     data () {
         return {

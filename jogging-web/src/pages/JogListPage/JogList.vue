@@ -4,6 +4,7 @@
             <alert v-if="success" type="success" dismissable="true" :content="t('success.jog.removed')" @dismiss="success = false" timer="5"></alert>
             <alert v-if="error" type="danger" dismissable="true" :content="t(`error.jogs.${error.status}`)" @dismiss="error = ''"></alert>
         </div>
+        <h2>{{ t('jogList') }}</h2>
         <table class="table">
             <thead>
                 <tr>

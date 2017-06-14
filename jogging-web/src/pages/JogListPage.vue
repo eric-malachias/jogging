@@ -79,9 +79,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-    .main-actions {
-        padding: 15px 0;
-    }
-</style>

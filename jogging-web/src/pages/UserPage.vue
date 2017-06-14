@@ -7,23 +7,14 @@
             <alert v-if="error" type="danger" dismissable="true" :content="t(`error.users.${error.status}`)" @dismiss="error = ''"></alert>
         </div>
 
-        <div class="form-group">
-            <input class="form-control" type="text" :placeholder="t('name')" v-model="user.name" @keypress.enter="save()">
-        </div>
-        <alert v-if="isInvalid('name')" type="danger" :dismissable="false" :content="t(`error.${error.body.name[0]}`)"></alert>
-        <div class="form-group">
-            <input class="form-control" type="text" :placeholder="t('email')" v-model="user.email" @keypress.enter="save()">
-        </div>
-        <alert v-if="isInvalid('email')" type="danger" :dismissable="false" :content="t(`error.${error.body.email[0]}`)"></alert>
-        <div class="form-group">
-            <input class="form-control" type="password" :placeholder="t('password')" v-model="user.password" @keypress.enter="save()">
-        </div>
-        <alert v-if="isInvalid('password')" type="danger" :dismissable="false" :content="t(`error.${error.body.password[0]}`)"></alert>
+        <form-input :label="t('name')" v-model="user.name" @return="save()" :error="error" name="name"></form-input>
+        <form-input :label="t('email')" v-model="user.email" @return="save()" :error="error" name="email"></form-input>
+        <form-input :label="t('password')" v-model="user.password" @return="save()" :error="error" name="password" type="password"></form-input>
 
         <div v-if="roles.length > 0 && isAdmin() && !isSelf()" class="role">
             <div class="form-group">
+                <label>{{ t('role') }}</label>
                 <select class="form-control" v-model="user.role_id">
-                    <option value="" disabled hidden>{{ t('role') }}</option>
                     <option v-for="role in roles" :key="role.id" :value="role.id" v-if="role.name !== 'admin'">
                         {{ t(role.name) }}
                     </option>
@@ -41,10 +32,12 @@
 import Alert from '@/components/Alert'
 import Auth from '@/services/Auth'
 import Http from '@/services/Http'
+import FormInput from '@/components/FormInput'
 
 export default {
     components: {
-        Alert
+        Alert,
+        FormInput
     },
     data () {
         return {
@@ -61,7 +54,9 @@ export default {
         }
     },
     created () {
-        this.loadRoles()
+        if (this.isAdmin()) {
+            this.loadRoles()
+        }
 
         if (!this.isNew()) {
             this.load()

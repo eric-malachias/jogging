@@ -53,7 +53,6 @@ export default {
         cursor: pointer;
     }
     .filters {
-        margin-bottom: -15px;
         margin-top: 15px;
     }
     .filter.hidden {
