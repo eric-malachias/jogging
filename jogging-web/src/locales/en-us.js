@@ -73,5 +73,8 @@ export default {
     'error.users.400': MESSAGE_BAD_REQUEST,
     'myAccount': 'My Account',
     'owner': 'Owner',
-    'backToManageJogs': '« Manage Jogs'
+    'backToManageJogs': '« Manage Jogs',
+    'home.welcome': 'Welcome to the jogging web app created by Henrique Golhiardi Malachias for Toptal. This application is mainly built using Vue.js (front end) and Laravel (back end).',
+    'home.loader': 'By the way, this icon indicated that something is loading:',
+    'home.firstSteps': 'To start using the app, click on "Sign Up" to create an account or on "Log In" if you already have one. Enjoy!'
 }

@@ -8,6 +8,7 @@ import SignUpPage from '@/pages/SignUpPage'
 import ErrorPage from '@/pages/ErrorPage'
 import UserListPage from '@/pages/UserListPage'
 import UserPage from '@/pages/UserPage'
+import HomePage from '@/pages/HomePage'
 import Http from '@/services/Http'
 
 Vue.use(Router)
@@ -67,6 +68,9 @@ const router = new Router({
             path: '/me',
             component: UserPage,
             beforeEnter: conditions.isLogged
+        }, {
+            path: '/',
+            component: HomePage
         }, {
             path: '*',
             component: ErrorPage

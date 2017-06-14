@@ -17,8 +17,10 @@
         </div>
         <alert v-if="isInvalid('ended_at')" type="danger" :dismissable="false" :content="t(`error.${error.body.ended_at[0]}`)"></alert>
 
-        <type-ahead v-if="isAdmin()" url="search/users" property="name" :placeholder="t('owner')" v-model="jog.owner" @return="saveJog()"></type-ahead>
-        <alert v-if="isInvalid('owner_id')" type="danger" :dismissable="false" :content="t(`error.${error.body.owner_id[0]}`)"></alert>
+        <div v-if="isAdmin()" class="owner">
+            <type-ahead url="search/users" property="name" :placeholder="t('owner')" v-model="jog.owner" @return="saveJog()"></type-ahead>
+            <alert v-if="isInvalid('owner_id')" type="danger" :dismissable="false" :content="t(`error.${error.body.owner_id[0]}`)"></alert>
+        </div>
 
         <button v-if="isAdmin()" class="btn btn-default btn-block-sm" type="submit" @click="goBack()">{{ t('backToManageJogs') }}</button>
         <button v-else class="btn btn-default btn-block-sm" type="submit" @click="goBack()">{{ t('backToMyJogs') }}</button>
@@ -48,7 +50,7 @@ export default {
                 id: this.$route.params.id,
                 started_at: '',
                 owner: '',
-                owner_id: ''
+                owner_id: Auth.user.id
             },
             startedAt: {
                 date: '',
