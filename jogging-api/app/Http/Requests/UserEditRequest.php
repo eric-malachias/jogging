@@ -14,6 +14,14 @@ class UserEditRequest extends Request
 
         return ',' . $this->user->id;
     }
+    protected function getPasswordRules()
+    {
+        if ($this->method() === 'PUT') {
+            return 'password';
+        }
+
+        return 'required|password';
+    }
 
     public function authorize()
     {
@@ -37,7 +45,7 @@ class UserEditRequest extends Request
         return [
             'name' => 'required',
             'email' => 'required|email|unique:users,email' . $this->excludeEmailFromUpdate(),
-            'password' => 'required|password',
+            'password' => $this->getPasswordRules(),
             'role_id' => 'exists:roles,id',
         ];
     }

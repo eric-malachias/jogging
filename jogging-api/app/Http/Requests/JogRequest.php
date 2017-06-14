@@ -12,7 +12,7 @@ class JogRequest extends Request
             return true;
         }
 
-        $ownerId = $this->owner_id;
+        $ownerId = $this->owner_id ?? $user->id;
 
         return (int)$user->id === (int)$ownerId;
     }
@@ -22,7 +22,7 @@ class JogRequest extends Request
             'started_at' => 'required|date',
             'ended_at' => 'required|date|after:started_at',
             'distance' => 'required|numeric|min:1',
-            'owner_id' => 'required|numeric|exists:users,id',
+            'owner_id' => 'numeric|exists:users,id',
         ];
     }
 }

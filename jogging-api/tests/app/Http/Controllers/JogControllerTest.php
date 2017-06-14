@@ -33,7 +33,7 @@ class JogControllerTest extends AbstractControllerTest
         $response = $this->callWithToken($user, 'GET', '/jogs/' . $jog->id);
 
         $this->assertEquals(Response::HTTP_OK, $response->status());
-        $this->assertEquals($jog->toArray(), (array)$response->getData());
+        $this->assertEquals($jog->id, $response->getData()->id);
     }
     public function forbiddenUsersProvider()
     {
