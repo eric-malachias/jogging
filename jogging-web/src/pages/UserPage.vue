@@ -3,14 +3,14 @@
         <h1>{{ user.name || t('noName') }}</h1>
 
         <div class="wrapper">
+            <error-alert v-model="error" page="users"></error-alert>
             <alert v-if="success" type="success" dismissable="true" :content="t('success.user.saved')" @dismiss="success = false"></alert>
-            <alert v-if="error" type="danger" dismissable="true" :content="t(`error.users.${error.status}`)" @dismiss="error = ''"></alert>
         </div>
 
         <form-input :label="t('name')" v-model="user.name" @return="save()" :error="error" name="name"></form-input>
         <form-input :label="t('email')" v-model="user.email" @return="save()" :error="error" name="email"></form-input>
 
-        <button class="btn btn-default" @click="showPassword = !showPassword">
+        <button class="btn btn-default show-password-button" @click="showPassword = !showPassword">
             <span v-if="showPassword">{{ t('hidePassword') }}</span>
             <span v-else>{{ t('showPassword') }}</span>
         </button>
@@ -42,11 +42,13 @@ import Alert from '@/components/Alert'
 import Auth from '@/services/Auth'
 import Http from '@/services/Http'
 import FormInput from '@/components/FormInput'
+import ErrorAlert from '@/components/ErrorAlert'
 
 export default {
     components: {
         Alert,
-        FormInput
+        FormInput,
+        ErrorAlert
     },
     data () {
         return {
@@ -158,7 +160,7 @@ export default {
 </script>
 
 <style scoped>
-    .password-container {
-        margin-top: 15px;
+    .show-password-button {
+        margin-bottom: 15px;
     }
 </style>

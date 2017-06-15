@@ -1,8 +1,8 @@
 <template>
     <div class="jog-list">
         <div class="wrapper">
+            <error-alert v-model="error" page="jogs"></error-alert>
             <alert v-if="success" type="success" dismissable="true" :content="t('success.jog.removed')" @dismiss="success = false" timer="5"></alert>
-            <alert v-if="error" type="danger" dismissable="true" :content="t(`error.jogs.${error.status}`)" @dismiss="error = ''"></alert>
         </div>
         <h2>{{ t('jogList') }}</h2>
         <table class="table">
@@ -51,11 +51,13 @@ import Auth from '@/services/Auth'
 import Http from '@/services/Http'
 import Jog from '@/services/Jog'
 import Pagination from 'vue-bootstrap-pagination'
+import ErrorAlert from '@/components/ErrorAlert'
 
 export default {
     components: {
         Alert,
-        Pagination
+        Pagination,
+        ErrorAlert
     },
     props: ['filters', 'refresh-token', 'is-admin'],
     data () {
@@ -144,5 +146,8 @@ export default {
 <style scoped>
     table {
         table-layout: fixed;
+    }
+    .wrapper {
+        margin-top: 15px;
     }
 </style>

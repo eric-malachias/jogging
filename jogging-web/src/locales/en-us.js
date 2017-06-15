@@ -2,7 +2,7 @@ const ERROR_UNAUTHORIZED = 'You are not authorized to access this.'
 
 export default {
     'error.400': 'Some of your information has failed our validation.',
-    'error.401': ERROR_UNAUTHORIZED,
+    'error.401': 'It seems your session has expired. Please, try logging out and in again.',
     'error.403': ERROR_UNAUTHORIZED,
     'error.404': 'We could not find what you were looking for.',
     'error.405': ERROR_UNAUTHORIZED,
@@ -80,7 +80,7 @@ export default {
     'owner': 'Owner',
     'backToManageJogs': '« Manage Jogs',
     'home.welcome': 'Welcome to the jogging web app created by Henrique Golhiardi Malachias for Toptal. This application is mainly built using Vue.js (front end) and Laravel (back end).',
-    'home.loader': 'By the way, this icon indicated that something is loading:',
+    'home.loader': 'By the way, this icon indicates that something is loading:',
     'home.firstSteps': 'To start using the app, click on "Sign Up" to create an account or on "Log In" if you already have one. Enjoy!',
     'error.validation.min.numeric': 'The distance must be greater than 0.',
     'jogList': 'Jog List',

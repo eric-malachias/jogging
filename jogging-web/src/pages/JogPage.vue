@@ -3,8 +3,8 @@
         <h1>{{ t('jog') }}</h1>
 
         <div class="wrapper">
+            <error-alert v-model="error" page="jogs"></error-alert>
             <alert v-if="success" type="success" dismissable="true" :content="t('success.jog.saved')" @dismiss="success = false"></alert>
-            <alert v-if="error" type="danger" dismissable="true" :content="t(`error.jogs.${error.status}`)" @dismiss="error = ''"></alert>
         </div>
         <date-time-picker v-model="jog.started_at" :date-placeholder="t('startedAtDate')" :time-placeholder="t('startedAtTime')" @return="saveJog()"></date-time-picker>
         <alert v-if="isInvalid('started_at')" type="danger" :dismissable="false" :content="t(`error.${error.body.started_at[0]}`)"></alert>
@@ -31,13 +31,15 @@ import DateTimePicker from '@/components/DateTimePicker'
 import TypeAhead from '@/components/TypeAhead'
 import Auth from '@/services/Auth'
 import FormInput from '@/components/FormInput'
+import ErrorAlert from '@/components/ErrorAlert'
 
 export default {
     components: {
         Alert,
         DateTimePicker,
         TypeAhead,
-        FormInput
+        FormInput,
+        ErrorAlert
     },
     data () {
         return {

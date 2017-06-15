@@ -8,8 +8,8 @@
 
         <div class="user-list">
             <div class="wrapper">
+                <error-alert v-model="error" page="users"></error-alert>
                 <alert v-if="success" type="success" dismissable="true" :content="t('success.user.removed')" @dismiss="success = false" timer="5"></alert>
-                <alert v-if="error" type="danger" dismissable="true" :content="t(`error.users.${error.status}`)" @dismiss="error = ''"></alert>
             </div>
             <table class="table">
                 <thead>
@@ -52,11 +52,13 @@
 import Alert from '@/components/Alert'
 import Http from '@/services/Http'
 import Pagination from 'vue-bootstrap-pagination'
+import ErrorAlert from '@/components/ErrorAlert'
 
 export default {
     components: {
         Alert,
-        Pagination
+        Pagination,
+        ErrorAlert
     },
     data () {
         return {
