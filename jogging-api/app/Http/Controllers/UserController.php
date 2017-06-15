@@ -36,7 +36,7 @@ class UserController extends Controller
     }
     public function signUp(UserEditRequest $request, UserRepository $userRepository)
     {
-        $user = $userRepository->create($request->only([
+        $user = $userRepository->create($request->intersect([
             'name',
             'email',
             'password',
@@ -87,7 +87,7 @@ class UserController extends Controller
     }
     public function putOne(UserEditRequest $request, User $user)
     {
-        $user->fill($request->only([
+        $user->fill($request->intersect([
             'name',
             'email',
             'password',
@@ -103,7 +103,7 @@ class UserController extends Controller
     }
     public function postOne(UserEditRequest $request, UserRepository $userRepository)
     {
-        $user = $userRepository->create($request->only([
+        $user = $userRepository->create($request->intersect([
             'name',
             'email',
             'password',

@@ -23,7 +23,7 @@ class JogController extends Controller
     }
     public function postOne(JogRequest $request, JogRepository $jogRepository)
     {
-        $jog = $jogRepository->create($request->only([
+        $jog = $jogRepository->create($request->intersect([
             'started_at',
             'ended_at',
             'distance',
@@ -34,7 +34,7 @@ class JogController extends Controller
     }
     public function putOne(JogRequest $request, Jog $jog)
     {
-        $jog->fill($request->only([
+        $jog->fill($request->intersect([
             'started_at',
             'ended_at',
             'distance',
