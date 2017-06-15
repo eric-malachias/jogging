@@ -87,5 +87,7 @@ export default {
     'weeklyJogReport': 'Weekly Jog Report',
     'showPassword': 'Show Password',
     'hidePassword': 'Hide Password',
-    'error.invalid': 'This field is invalid.'
+    'error.invalid': 'This field is invalid.',
+    'hint.removeUser': 'Click to remove this user.',
+    'hint.editUser': 'Click to edit this user.'
 }
