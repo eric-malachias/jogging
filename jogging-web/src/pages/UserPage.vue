@@ -86,6 +86,7 @@ export default {
                 return
             }
 
+            this.clearAlerts()
             this.clearUser()
         }
     },
@@ -141,6 +142,7 @@ export default {
             return this.error && this.error.body && this.error.body[field]
         },
         load () {
+            this.clearAlerts()
             this.clearUser()
 
             Http

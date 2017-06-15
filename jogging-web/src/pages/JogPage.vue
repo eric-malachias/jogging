@@ -83,6 +83,7 @@ export default {
                 return
             }
 
+            this.clearAlerts()
             this.clearJog()
         }
     },
@@ -133,6 +134,7 @@ export default {
             return this.error && this.error.body && this.error.body[field]
         },
         loadJog () {
+            this.clearAlerts()
             this.clearJog()
 
             Http
