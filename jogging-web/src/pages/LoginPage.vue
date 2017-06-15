@@ -4,12 +4,14 @@
             <div class="col-sm-12">
                 <h1>{{ t('login') }}</h1>
 
-                <alert v-if="error" type="danger" dismissable="true" :content="t(`error.login.${error.status}`)" @dismiss="error = ''"></alert>
+                <error-alert v-model="error" page="login"></error-alert>
                 <div class="form-group">
-                    <input class="form-control" type="text" :placeholder="t('email')" v-model="email" @keypress.enter="login()">
+                    <label>{{ t('email') }}</label>
+                    <input class="form-control" type="text" v-model="email" @keypress.enter="login()">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="password" :placeholder="t('password')" v-model="password" @keypress.enter="login()">
+                    <label>{{ t('password') }}</label>
+                    <input class="form-control" type="password" v-model="password" @keypress.enter="login()">
                 </div>
                 <input class="btn btn-primary btn-block-sm pull-right" type="submit" @click="login()" :value="t('login')">
             </div>
@@ -19,12 +21,12 @@
 
 <script>
 import Auth from '@/services/Auth'
-import Alert from '@/components/Alert'
+import ErrorAlert from '@/components/ErrorAlert'
 import User from '@/services/User'
 
 export default {
     components: {
-        Alert
+        ErrorAlert
     },
     data () {
         return {
