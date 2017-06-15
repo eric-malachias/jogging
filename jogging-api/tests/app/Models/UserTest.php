@@ -60,4 +60,26 @@ class UserTest extends TestCase
 
         $this->assertTrue($user->getWeeklyJogReport()->get()->count() > 0);
     }
+    public function testScopeFilterByKeyword()
+    {
+        $keyword = '12345';
+        $user = Mockery::mock(User::class)->makePartial();
+        $query = Mockery::mock(stdClass::class)
+            ->shouldReceive('where')
+            ->with('name', 'LIKE', "%{$keyword}%")
+            ->once()
+            ->getMock();
+
+        $user->scopeFilterByKeyword($query, $keyword);
+    }
+    public function testScopeFilterByNameLength()
+    {
+        $user = Mockery::mock(User::class)->makePartial();
+        $query = Mockery::mock(stdClass::class)
+            ->shouldReceive('orderBy')
+            ->once()
+            ->getMock();
+
+        $user->scopeOrderByNameLength($query);
+    }
 }

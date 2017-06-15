@@ -109,6 +109,6 @@ class User extends Authenticatable
     }
     public function scopeOrderByNameLength($query)
     {
-        $this->orderBy(DB::raw('length(name)'));
+        $query->orderBy(DB::raw('length(name)'));
     }
 }
