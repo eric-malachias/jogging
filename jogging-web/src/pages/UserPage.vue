@@ -10,11 +10,11 @@
         <form-input :label="t('name')" v-model="user.name" @return="save()" :error="error" name="name"></form-input>
         <form-input :label="t('email')" v-model="user.email" @return="save()" :error="error" name="email"></form-input>
 
-        <button class="btn btn-default show-password-button" @click="showPassword = !showPassword">
+        <button v-if="!isNew()" class="btn btn-default show-password-button" @click="showPassword = !showPassword">
             <span v-if="showPassword">{{ t('hidePassword') }}</span>
             <span v-else>{{ t('showPassword') }}</span>
         </button>
-        <div v-if="showPassword" class="password-container">
+        <div v-if="showPassword || isNew()" class="password-container">
             <form-input :label="t('password')" v-model="user.password" @return="save()" :error="error" name="password" type="password"></form-input>
         </div>
 
@@ -55,7 +55,7 @@ export default {
             error: '',
             showPassword: false,
             user: {
-                id: this.$route.params.id || (this.isSelf() && Auth.user.id),
+                id: '',
                 name: '',
                 email: '',
                 password: '',
@@ -79,12 +79,27 @@ export default {
             if (error.status === Http.HTTP_FORBIDDEN) {
                 this.goBack()
             }
+        },
+        '$route.path' (path) {
+            if (!this.isNew()) {
+                this.load()
+                return
+            }
+
+            this.clearUser()
         }
     },
     methods: {
         clearAlerts () {
             this.error = ''
             this.success = false
+        },
+        clearUser () {
+            this.user.id = this.$route.params.id || (this.isSelf() && Auth.user.id)
+            this.user.name = ''
+            this.user.email = ''
+            this.user.password = ''
+            this.user.role_id = ''
         },
         getData () {
             let data = {
@@ -94,8 +109,11 @@ export default {
                 password: this.user.password
             }
 
-            if (!this.showPassword || !this.user.password) {
+            if (!this.isNew() && (!this.showPassword || !this.user.password)) {
                 delete data.password
+            }
+            if (!this.isAdmin()) {
+                delete data.role_id
             }
 
             return data
@@ -114,7 +132,7 @@ export default {
             return Auth.isAdmin()
         },
         isNew () {
-            return this.user.id === 'new'
+            return this.$route.params.id === 'new'
         },
         isSelf () {
             return this.$route.path === '/me'
@@ -123,6 +141,8 @@ export default {
             return this.error && this.error.body && this.error.body[field]
         },
         load () {
+            this.clearUser()
+
             Http
                 .get(this, `users/${this.user.id}`)
                 .then(response => {
@@ -138,6 +158,8 @@ export default {
         },
         save () {
             this.clearAlerts()
+
+            console.log(this.getData())
 
             this
                 .getRequest()
