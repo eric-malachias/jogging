@@ -48,12 +48,10 @@ export default {
             jog: {
                 id: this.$route.params.id,
                 started_at: '',
+                ended_at: '',
+                distance: '',
                 owner: '',
                 owner_id: Auth.user.id
-            },
-            startedAt: {
-                date: '',
-                time: ''
             },
             success: ''
         }
@@ -65,7 +63,13 @@ export default {
             }
         },
         'jog.ended_at' (endedAt) {
-            this.duration = Jog.calculateDuration(this.jog.started_at, endedAt)
+            let duration = Jog.calculateDuration(this.jog.started_at, endedAt)
+
+            if (isNaN(duration)) {
+                duration = ''
+            }
+
+            this.duration = duration
         },
         'jog.owner' (owner) {
             this.jog.owner_id = owner && owner.id || null
@@ -73,11 +77,13 @@ export default {
         'jog.owner.id' (id) {
             this.jog.owner_id = id
         },
-        'startedAt.date' (date) {
-            this.updateStartAt()
-        },
-        'startedAt.time' (time) {
-            this.updateStartAt()
+        '$route.path' (path) {
+            if (!this.isNew()) {
+                this.loadJog()
+                return
+            }
+
+            this.clearJog()
         }
     },
     created () {
@@ -89,6 +95,15 @@ export default {
         clearAlerts () {
             this.error = ''
             this.success = false
+        },
+        clearJog () {
+            this.jog.id = this.$route.params.id || ''
+            this.jog.distance = ''
+            this.jog.started_at = ''
+            this.jog.ended_at = ''
+            this.jog.owner = ''
+            this.jog.owner_id = Auth.user.id
+            this.duration = ''
         },
         getData () {
             this.jog.ended_at = Jog.calculateEndedAt(this.jog.started_at, this.duration)
@@ -112,12 +127,14 @@ export default {
             return Auth.isAdmin()
         },
         isNew () {
-            return this.jog.id === 'new'
+            return this.$route.params.id === 'new'
         },
         isInvalid (field) {
             return this.error && this.error.body && this.error.body[field]
         },
         loadJog () {
+            this.clearJog()
+
             Http
                 .get(this, `jogs/${this.jog.id}`)
                 .then(response => {
