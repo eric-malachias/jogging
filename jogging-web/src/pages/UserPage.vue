@@ -161,8 +161,6 @@ export default {
         save () {
             this.clearAlerts()
 
-            console.log(this.getData())
-
             this
                 .getRequest()
                 .then(response => {
